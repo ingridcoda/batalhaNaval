@@ -106,16 +106,17 @@ public class Navio extends JPanel implements MouseListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
-		if(SwingUtilities.isLeftMouseButton(mouse)){
+		
+		//if(SwingUtilities.isLeftMouseButton(mouse)){
 			this.isSelected = !isSelected;
-			if(this.isSelected == true){
+			//if(this.isSelected){
 				this.setCor(Color.RED);
-				repaint();
-			} else {
-				this.setCor(Color.BLACK);
-				repaint();
-			}
-		}		
+				this.repaint();
+			//} else {
+				//this.setCor(Color.BLACK);
+				this.repaint();
+			//}
+		//}		
 		if(SwingUtilities.isRightMouseButton(mouse) && isSelected){
 			this.isRotate = !isRotate;
 			if(tipo != 3){
@@ -134,9 +135,7 @@ public class Navio extends JPanel implements MouseListener{
 				this.repaint();
 			}
 		}
-		new ControladorNavio().mouseClicked(mouse);
-		
-		
+		new ControladorNavio().mouseClicked(mouse);		
 	}
 
 	

@@ -24,14 +24,17 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 	public static Jogador jogVez;
 	public static Jogador jogOponente;
 	public static Tabuleiro t1, t2;
+	private JPanel painel;
 	
 	/*Construtor da Classe de Visualização*/
 	public TelaCampoBatalha(Jogador jogVez, Jogador jogOponente){	
 		super();
+		this.painel = new JPanel();
 		
 		TelaCampoBatalha.jogVez = jogVez;
 		TelaCampoBatalha.jogOponente = jogOponente;
 		this.setBackground(Color.WHITE);
+		this.painel.setBackground(Color.WHITE);
 		this.painel.setBounds(0, 0, 800, 600);
 		
 		t1 = new Tabuleiro(TelaCampoBatalha.jogVez, 30, 150);

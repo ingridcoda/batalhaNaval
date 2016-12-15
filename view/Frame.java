@@ -26,7 +26,7 @@ public class Frame extends JFrame{
 	/*Singleton*/
 	public static synchronized Frame getInstance(){
 		if(instancia == null){
-			instancia = new Frame();
+			instancia = new TelaJogadores();
 		} 
 		return instancia;
 	}

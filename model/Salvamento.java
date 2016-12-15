@@ -32,7 +32,7 @@ public class Salvamento {
 		try {
 			
 			arquivo = new PrintWriter(arq);
-			arquivo.printf("%d\n", TelaCampoBatalha.jogVez.numEmbarcacoes);
+			arquivo.printf("%d\n", tela.jogVez.numEmbarcacoes);
 			arquivo.printf("%d\n", tela.jogOponente.numEmbarcacoes);
 			arquivo.printf("%s\n", tela.jogVez.nome);
 
@@ -82,21 +82,33 @@ public class Salvamento {
 			arquivo = new Scanner(new FileReader(arq));	
 
 			while(arquivo.hasNext()){
+				//System.out.println("Valor atual num embarcacoes jogador vez: " +tela.jogVez.numEmbarcacoes);
 				tela.jogVez.numEmbarcacoes = arquivo.nextInt();
+				//System.out.println("Valor alterado num embarcacoes jogador vez: " +tela.jogVez.numEmbarcacoes);
+				//System.out.println("Valor atual num embarcacoes jogador oponente: " +tela.jogOponente.numEmbarcacoes);
 				tela.jogOponente.numEmbarcacoes = arquivo.nextInt();
-				tela.jogVez.nome = arquivo.nextLine();
+				//System.out.println("Valor alterado num embarcacoes jogador oponente: " +tela.jogOponente.numEmbarcacoes);
+				//System.out.println("Valor atual nome jogador vez: " +tela.jogVez.nome);
+				System.out.println(arquivo.next());
+				tela.jogVez.nome = arquivo.next();
+				//System.out.println("Valor alterado nome jogador vez: " +tela.jogVez.nome);
 
 				for(int i = 0; i < 15; i++){
 					for(int j = 0; j < 15; j++){
-						tela.jogVez.matriz[i][j].tipoArma = arquivo.nextInt();
+						//System.out.println("Valor atual matriz jogador vez posicao i j: " +tela.jogVez.matriz[i][j].tipoArma);
+						tela.jogVez.matriz[i][j].tipoArma = arquivo.nextInt(); //// exceção aqui... 
+						//System.out.println("Valor alterado matriz jogador vez posicao i j: " +tela.jogVez.matriz[i][j].tipoArma);
 					}
 				}
-				
-				tela.jogOponente.nome = arquivo.nextLine();
-
+				//System.out.println("Valor atual nome jogador oponente: " +tela.jogOponente.nome);
+				System.out.println(arquivo.next());
+				tela.jogOponente.nome = arquivo.next();
+				//System.out.println("Valor alterado nome jogador oponente: " +tela.jogOponente.nome);
 				for(int i = 0; i < 15; i++){
 					for(int j = 0; j < 15; j++){
-						tela.jogOponente.matriz[i][j].tipoArma = arquivo.nextInt();
+						//System.out.println("Valor atual matriz jogador oponente posicao i j: " +tela.jogOponente.matriz[i][j].tipoArma);
+						tela.jogOponente.matriz[i][j].tipoArma = arquivo.nextInt(); 
+						//System.out.println("Valor alterado matriz jogador oponente posicao i j: " +tela.jogVez.matriz[i][j].tipoArma);
 					}
 				}
 			}		

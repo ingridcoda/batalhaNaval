@@ -37,7 +37,7 @@ public class Destroyer extends Navio implements ActionListener, MouseListener{
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
- 	}
+	}
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
 		super.mouseClicked(mouse);
