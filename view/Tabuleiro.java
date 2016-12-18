@@ -38,7 +38,7 @@ public class Tabuleiro extends JPanel implements MouseListener{
 		while (j < 15){ 
 			for(i = 0; i < 15; i++){
 				g2d.draw(new Rectangle2D.Double(x, y, 20, 20));	
-				if(jogador.matriz[i][j].getTipoArma() == -1){
+				if(jogador.matriz[i][j].getTipoArma() == -1 && jogador.matriz[i][j].statusAcerto == true){
 					g2d.setColor(Color.RED);
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
 				} else if(jogador.matriz[i][j].getTipoArma() > 0){

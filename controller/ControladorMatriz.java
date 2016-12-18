@@ -29,7 +29,6 @@ public class ControladorMatriz implements MouseListener{
 		} else {
 			Facade.atacar(matrizVez, mouse.getX(), mouse.getY());
 		}
-		//mouse.getComponent().repaint();
 	}
 
 	@Override

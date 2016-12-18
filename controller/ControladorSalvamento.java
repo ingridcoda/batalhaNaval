@@ -4,14 +4,17 @@ import java.awt.event.*;
 import view.TelaCampoBatalha;
 import facade.Facade;
 
+
+/*Classe de Controle do Salvamento*/
 public class ControladorSalvamento implements ActionListener {
 
-	TelaCampoBatalha tela;
+	public TelaCampoBatalha tela;
+	
 	/*Construtor da Classe de Controle*/
 	public ControladorSalvamento(TelaCampoBatalha tela){
 		this.tela = tela;
 	}
-	/*Tratamento de Eventos de Botão*/
+	/*Tratamento de Eventos de Botï¿½o*/
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == TelaCampoBatalha.btnSave){

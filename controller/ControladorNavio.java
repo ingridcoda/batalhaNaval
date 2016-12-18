@@ -3,14 +3,16 @@ package controller;
 import java.awt.event.*;
 import view.Navio;
 
+/*Classe de Controle do tipo Navio*/
 public class ControladorNavio implements MouseListener{
 	public static Navio navioClicado;
 
-	
+	/*Verificação de último navio clicado*/
 	public static Navio verificaUltimoSelecionado(MouseEvent mouse){
 		return (Navio) mouse.getSource();
 	}
 
+	/*Tratamentos de Eventos de Mouse*/
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
 		int x = mouse.getX();

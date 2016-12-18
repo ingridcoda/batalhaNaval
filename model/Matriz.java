@@ -3,7 +3,7 @@ package model;
 /*Classe de Neg󣩯 para criação do tipo Matriz*/
 public class Matriz {
 	protected int tipoArma;
-	boolean statusAcerto;
+	public boolean statusAcerto;
 
 	/*Construtor da Classe de Negócio*/
 	public Matriz(int arma, boolean statusAcerto){

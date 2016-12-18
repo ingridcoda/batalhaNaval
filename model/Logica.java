@@ -161,7 +161,7 @@ public class Logica extends Observable{
 	}
 
 	/*Verificação de posição válida*/
-	private boolean verificaValidadePosicionamento(int i, int j){ ///////////REVER CONDI��ES... TA INCOMPLETO!!!
+	private boolean verificaValidadePosicionamento(int i, int j){ ///////////REVER CONDI��ES... TA INCOMPLETO!!!
 		i = Logica.j;
 		j = Logica.i;
 		if(i > 0 && i < 14 && j > 0 && j < 14){
@@ -315,6 +315,7 @@ public class Logica extends Observable{
 
 	public void setStatus(int x, int y){
 		if(acertou){
+			Logica.matrizControleJogadorVez[i][j].tipoArma = -1;
 			Logica.matrizControleJogadorVez[i][j].statusAcerto = true;	
 			this.setChanged();
 			notifyObservers(Logica.matrizControleJogadorVez);
