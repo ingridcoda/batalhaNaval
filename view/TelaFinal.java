@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import facade.Facade;
 
+/*Classe de Visualização Final*/
 public class TelaFinal extends Frame implements ActionListener{
 	private static TelaFinal instancia = null;
 	private Font fonteTitulo = new Font("Monospaced", Font.BOLD, 60);

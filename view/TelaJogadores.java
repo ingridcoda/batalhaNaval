@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import facade.*;
 
-/*Classe de VisualizaÃ§Ã£o da Fase de CriaÃ§Ã£o de Jogadores*/
+/* Classe de Visualização da Fase de Criação de Jogadores */
 @SuppressWarnings("serial")
 public class TelaJogadores extends Frame implements ActionListener{
 	private static TelaJogadores instancia = null;
@@ -19,7 +19,7 @@ public class TelaJogadores extends Frame implements ActionListener{
 	public static JButton btnStart;
 	public static JButton btnCancel;
 	
-	/*Construtor da Classe de VisualizaÃ§Ã£o*/
+	/* Construtor da Classe de Visualização */
 	public TelaJogadores(){
 		super();
 		
@@ -68,7 +68,7 @@ public class TelaJogadores extends Frame implements ActionListener{
 		this.setVisible(true);			
 	}
 	
-	/*Singleton*/
+	/* Singleton */
 	public static synchronized TelaJogadores getInstance(){
 		if(instancia == null){
 			instancia = new TelaJogadores();
@@ -76,7 +76,7 @@ public class TelaJogadores extends Frame implements ActionListener{
 		return instancia;
 	}
 	
-	/*Getters e Setters*/
+	/* Getters e Setters */
 	public static String getNomeJogador1(){
 		return txtfNome1.getText();
 	}
@@ -85,24 +85,43 @@ public class TelaJogadores extends Frame implements ActionListener{
 		return txtfNome2.getText();
 	}
 	
+	/* Alternar Nome do Jogador */
 	public static String alteraNomeJogador(String nomeJogador){
+		
+		/*verifica nome do jogador dado por parâmetro*/
 		if(nomeJogador.equals(getNomeJogador1())){
+			
+			/* atribui nome do segundo jogador ao nome dado por parâmetro */
 			nomeJogador = getNomeJogador2();
+			
 		} else {
+			
+			/* atribui nome do primeiro jogador ao nome dado por parâmetro */
 			nomeJogador = getNomeJogador1();	
+			
 		}
+		
+		/* retorna nome do jogador */
 		return nomeJogador;
 	}
 	
-	/*Tratamento de Evento de BotÃ£o*/
+	/* Tratamento de Evento de Botão */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnStart){	
+		/* verifica botão clicado*/
+		if(e.getSource() == btnStart){
+			
+			/* seta visibilidade da tela de novo jogo como falsa, a encerra e chama
+			 * métodos de criação de jogadores e de criação da tela de posicionamento 
+			 * de embarcações, definidos na classe da fachada, passando nome de jogador */
 			this.setVisible(false);
 			this.dispose();
 			Facade.criarJogadores(getNomeJogador1(), getNomeJogador2());
 			Facade.posicionarArmasJogador1(Facade.j1.getNome());
+			
 		} else if(e.getSource() == btnCancel){
+			
+			/* finaliza o jogo */
 			System.exit(1);
 		}
 	}

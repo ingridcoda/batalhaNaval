@@ -1,4 +1,4 @@
-package view;
+package model;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -8,7 +8,6 @@ import javax.swing.*;
 
 import controller.ControladorNavio;
 
-@SuppressWarnings("serial")
 public class Navio extends JPanel implements MouseListener{
 	private int x;
 	private int y;
@@ -24,11 +23,9 @@ public class Navio extends JPanel implements MouseListener{
 		this.y = y;
 		this.tipo = tipo;
 		this.setLocation(x, y);
-		
-		addMouseListener(this);
 	}
 	
-	public void setCor(Color cor) {
+	private void setCor(Color cor) {
 		this.cor = cor;		
 	}
 	
@@ -70,7 +67,7 @@ public class Navio extends JPanel implements MouseListener{
 		Graphics2D g2d = (Graphics2D) g;
 		if(tipo != 3){
 			this.width = setTam(tipo);
-			if(isRotate == false){			
+			if(!isRotate){			
 				g2d.draw(new Rectangle2D.Double(0, 0, width, height));
 				g2d.setColor(cor);
 				g2d.fill(new Rectangle2D.Double(0, 0, width, height));
@@ -81,7 +78,7 @@ public class Navio extends JPanel implements MouseListener{
 			}
 		} else if(tipo == 3){
 			this.width = setTam(1);
-			if(isRotate == false){
+			if(!isRotate){
 				g2d.draw(new Rectangle2D.Double(0, 20, width, height));
 				g2d.setColor(cor);
 				g2d.fill(new Rectangle2D.Double(0, 20, width, height));
@@ -107,28 +104,29 @@ public class Navio extends JPanel implements MouseListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
-		
-		//if(SwingUtilities.isLeftMouseButton(mouse)){
+		new ControladorNavio();
+		new ControladorNavio().mouseClicked(mouse);
+		if(SwingUtilities.isLeftMouseButton(mouse)){
 			this.isSelected = !isSelected;
-			//if(this.isSelected){
+			if(this.isSelected){
 				this.setCor(Color.RED);
 				this.repaint();
-			//} else {
-				//this.setCor(Color.BLACK);
+			} else {
+				this.setCor(Color.BLACK);
 				this.repaint();
-			//}
-		//}		
+			}
+		}		
 		if(SwingUtilities.isRightMouseButton(mouse) && isSelected){
 			this.isRotate = !isRotate;
 			if(tipo != 3){
-				if(isRotate == true){
+				if(isRotate){
 					this.setSize(height, width);
 				} else {
 					this.setSize(width, height);
 				}
 				this.repaint();
 			} else {
-				if(isRotate == true){
+				if(isRotate){
 					this.setSize(60, 60);
 				} else {
 					this.setSize(60, 40);
@@ -136,7 +134,7 @@ public class Navio extends JPanel implements MouseListener{
 				this.repaint();
 			}
 		}
-		new ControladorNavio().mouseClicked(mouse);		
+		
 	}
 
 	

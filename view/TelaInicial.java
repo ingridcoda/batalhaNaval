@@ -3,11 +3,11 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
 import facade.Facade;
 import model.Jogador;
-import model.Matriz;
 
+/* Classe de Visualização Inicial */
+@SuppressWarnings("serial")
 public class TelaInicial extends Frame implements ActionListener{
 	private static TelaInicial instancia = null;
 	private Font fonteTitulo = new Font("Monospaced", Font.BOLD, 60);
@@ -16,7 +16,7 @@ public class TelaInicial extends Frame implements ActionListener{
 	public static JButton btnNewGame;
 	public static JButton btnLoadGame;
 	
-	/*Construtor da Classe de VisualizaÃ§Ã£o*/
+	/* Construtor da Classe de Visualização */
 	public TelaInicial(){
 		super();
 		
@@ -51,7 +51,7 @@ public class TelaInicial extends Frame implements ActionListener{
 		
 	}
 
-	/*Singleton*/
+	/* Singleton */
 	public static synchronized TelaInicial getInstance(){
 		if(instancia == null){
 			instancia = new TelaInicial();
@@ -59,21 +59,35 @@ public class TelaInicial extends Frame implements ActionListener{
 		return instancia;
 	}
 	
-	/*Tratamento de Evento de BotÃ£o*/
+	/* Tratamento de Evento de Botão */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		/* verifica qual botão foi clicado */
 		if(e.getSource() == btnNewGame){
+			
+			/* seta visibilidade da tela inicial como falsa, a encerra 
+			 * e chama método novo jogo, definido na classe da fachada */
 			this.setVisible(false);
 			this.dispose();
 			Facade.novoJogo();
+			
 		} else if (e.getSource() == btnLoadGame){
+			
+			/* seta visibilidade da tela inicial como falsa, a encerra, cria duas instâncias de jogadores
+			 * com nomes vazios e chama método de carregamento de jogo, definido na classe de fachada, 
+			 * passando uma instância da tela de campo de batalha e os jogadores criados*/
 			this.setVisible(false);
 			this.dispose();
 			Jogador j1 = new Jogador("");
 			Jogador j2 = new Jogador("");
 			Facade.carregarJogo(TelaCampoBatalha.getInstance(j1, j2));
+			
 		} else {
+			
+			/* finaliza o jogo */
 			System.exit(1);
+			
 		}
 		
 	}

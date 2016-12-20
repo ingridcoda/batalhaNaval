@@ -5,8 +5,6 @@ import java.awt.event.*;
 import java.util.*;
 
 import javax.swing.*;
-
-import controller.ControladorMatriz;
 import controller.ControladorSalvamento;
 import model.Jogador;
 import model.Matriz;
