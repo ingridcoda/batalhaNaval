@@ -9,7 +9,7 @@ import controller.ControladorSalvamento;
 import model.Jogador;
 import model.Matriz;
 
-/*Classe de Visualizaç£¯ da Fase de Ataques*/
+/* Classe de Visualização da Fase de Ataques */
 @SuppressWarnings("serial")
 public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 	private static TelaCampoBatalha instancia = null;
@@ -24,7 +24,7 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 	public static Tabuleiro t1, t2;
 	private JPanel painel;
 	
-	/*Construtor da Classe de VisualizaÃ§Ã£o*/
+	/* Construtor da Classe de Visualização */
 	public TelaCampoBatalha(Jogador jogVez, Jogador jogOponente){	
 		super();
 		this.painel = new JPanel();
@@ -71,7 +71,7 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 		
 	}
 	
-	/*Singleton*/
+	/* Singleton */
 	public static synchronized TelaCampoBatalha getInstance(Jogador j1, Jogador j2){
 		if(instancia == null){
 			instancia = new TelaCampoBatalha(j1, j2);
@@ -79,43 +79,68 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 		return instancia;
 	}
 	
-	/*Alternar Vez de Jogadores*/
+	/* Alternar Vez de Jogadores */
 	public void alternaJogadorVez(){
+		
+		/* atribui jogador da vez ao jogador oponente, atribui 
+		 * jogador oponente ao jogador da vez e redesenha tela */
 		Jogador aux = jogVez;
 		jogVez = jogOponente;
 		jogOponente = aux;
 		repaint();
+		
 	}
 	
 	/*Alternar Tabuleiros*/
 	public void alternaTabuleiros(){
+		
+		/* verifica qual tabuleiro está habilitado */
 		if(t1.isEnabled() && t1.getMatrizControle() == jogOponente.matriz){
+			
+			/*desabilita o primeiro tabuleiro e habilita o segundo tabuleiro */ 
 			t1.setEnabled(false);
 			t2.setEnabled(true);
+			
 		} else if (t2.isEnabled() && t2.getMatrizControle() == jogOponente.matriz){
+			
+			/*desabilita o segundo tabuleiro e habilita o primeiro tabuleiro */ 
 			t2.setEnabled(false);
 			t1.setEnabled(true);
 		}
+		
+		/*chama método de alternar jogadores definido nesta classe e redesenha tela */
 		alternaJogadorVez();
 		repaint();
+		
 	}
 	
 	/*Tratamento de Evento de Botão*/
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		/* chama método de tratamento de evento de botão da classe de controle de salvamento,
+		 * passando evento de clique de botão ocorrido na tela de campo de batalha*/
 		new ControladorSalvamento(this).actionPerformed(e);
+		
 	}
 
 	/*Observer*/
 	@Override
 	public void update(Observable o, Object arg) {
+		
+		/* verifica se observado mudou em algo */
 		if(o.hasChanged()){
+			
+			/* matriz do jogador recebe matriz atualizada e tela é redesenhada */
 			 TelaCampoBatalha.jogOponente.matriz = (Matriz[][]) arg;
 			 this.repaint();
-		}		
+			 
+		}	
+		
+		/*tela é redesenhada */
 		this.repaint();
+		
 	}
 
-	
 	
 }

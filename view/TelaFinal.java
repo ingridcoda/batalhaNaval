@@ -2,10 +2,13 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import facade.Facade;
 
-/*Classe de Visualização Final*/
+/* Classe de Visualização Final */
+@SuppressWarnings("serial")
 public class TelaFinal extends Frame implements ActionListener{
 	private static TelaFinal instancia = null;
 	private Font fonteTitulo = new Font("Monospaced", Font.BOLD, 60);
@@ -14,7 +17,7 @@ public class TelaFinal extends Frame implements ActionListener{
 	public static JButton btnQuitGame;
 	public static JButton btnRestartGame;
 	
-	/*Construtor da Classe de VisualizaÃ§Ã£o*/
+	/* Construtor da Classe de Visualização */
 	public TelaFinal(String nomeVencedor){
 		super();
 		
@@ -48,7 +51,7 @@ public class TelaFinal extends Frame implements ActionListener{
 		this.setVisible(true);
 	}
 	
-	/*Singleton*/
+	/* Singleton */
 	public static synchronized TelaFinal getInstance(String nomeVencedor){
 		if(instancia == null){
 			instancia = new TelaFinal(nomeVencedor);
@@ -56,14 +59,23 @@ public class TelaFinal extends Frame implements ActionListener{
 		return instancia;
 	}
 	
-	/*Tratamento de Evento de Mouse*/
+	/* Tratamento de Evento de Mouse */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		/*verifica qual botão foi clicado */
 		if(e.getSource() == btnQuitGame){
+			
+			/* finaliza o jogo */
 			System.exit(1);
+			
 		} else if (e.getSource() == btnRestartGame){
+			
+			/* inicia novo jogo */
 			Facade.novoJogo();
+			
 		}
 		
 	}
+	
 }
