@@ -13,7 +13,6 @@ import model.Jogador;
 public class Tabuleiro extends JPanel implements MouseListener{
 	private int numEmbarcacoesADistribuir;
 	private static Jogador jogador;
-	//private Color cor;
 
 	public Tabuleiro(Jogador j, int x, int y){
 		Tabuleiro.jogador = j;
@@ -24,25 +23,32 @@ public class Tabuleiro extends JPanel implements MouseListener{
 		addMouseListener(this);
 	}
 
-
+	/* Desenhar tabuleiro */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		int x, y, i, j;
 
-
-		/* Desenhar tabuleiro*/
 		x = 10;
 		y = 10;
 		j = 0;
 		while (j < 15){ 
 			for(i = 0; i < 15; i++){
 				g2d.draw(new Rectangle2D.Double(x, y, 20, 20));	
-				if(jogador.matriz[i][j].getTipoArma() == -1 && jogador.matriz[i][j].statusAcerto == true){
+				
+				/* trata caso de posição que já foi acertada */
+				if(jogador.matriz[i][j].getTipoArma() == 0 && jogador.matriz[i][j].statusAcerto == true){
 					g2d.setColor(Color.RED);
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
-				} else if(jogador.matriz[i][j].getTipoArma() > 0){
+					
+				/* trata caso de tela de posicionamento */	
+				} else if(jogador.matriz[i][j].getTipoArma() > 0 && (TelaEmbarcacoes.getInstance1().isVisible() || TelaEmbarcacoes.getInstance2().isVisible())){
 					g2d.setColor(Color.BLACK);
+					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
+					
+				/* trata caso de clicar no mar */
+				} else if(jogador.matriz[i][j].getTipoArma() == 0 && jogador.matriz[i][j].foiClicado == true){
+					g2d.setColor(Color.BLUE);
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
 				}
 				x += 20;
@@ -104,7 +110,6 @@ public class Tabuleiro extends JPanel implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
 		new ControladorMatriz(jogador.matriz, mouse).mouseClicked(mouse);	
-
 	}
 
 

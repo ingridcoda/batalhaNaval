@@ -3,7 +3,7 @@ import controller.*;
 import model.*;
 import view.*;
 
-/*Classe de Fachada*/
+/* Classe de Fachada */
 public class Facade {
 	private static Logica l;
 	private static boolean acertou;

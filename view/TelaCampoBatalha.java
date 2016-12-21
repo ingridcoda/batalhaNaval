@@ -91,7 +91,7 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 		
 	}
 	
-	/*Alternar Tabuleiros*/
+	/* Alternar Tabuleiros */
 	public void alternaTabuleiros(){
 		
 		/* verifica qual tabuleiro está habilitado */
@@ -114,7 +114,7 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 		
 	}
 	
-	/*Tratamento de Evento de Botão*/
+	/* Tratamento de Evento de Botão */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -124,7 +124,7 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 		
 	}
 
-	/*Observer*/
+	/* Observer */
 	@Override
 	public void update(Observable o, Object arg) {
 		

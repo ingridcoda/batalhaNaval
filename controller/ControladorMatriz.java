@@ -6,17 +6,16 @@ import facade.Facade;
 import model.Matriz;
 import view.TelaEmbarcacoes;
 
-/*Classe de Controle do tipo Matriz*/
+/* Classe de Controle do tipo Matriz */
 public class ControladorMatriz implements MouseListener{
 	private Matriz[][] matrizVez;
 	
-	/*Construtor da Classe de Controle*/
+	/* Construtor da Classe de Controle */
 	public ControladorMatriz(Matriz[][] matrizControleJogadorVez, MouseEvent mouse){
 		this.matrizVez = matrizControleJogadorVez;
-		//mouseClicked(mouse);
 	}
 	
-	/*Tratamentos de Eventos de Mouse*/
+	/* Tratamentos de Eventos de Mouse */
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
 		int x = mouse.getX();

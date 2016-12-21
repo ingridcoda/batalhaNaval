@@ -5,16 +5,16 @@ import view.TelaCampoBatalha;
 import facade.Facade;
 
 
-/*Classe de Controle do Salvamento*/
+/* Classe de Controle do Salvamento */
 public class ControladorSalvamento implements ActionListener {
 
 	public TelaCampoBatalha tela;
 	
-	/*Construtor da Classe de Controle*/
+	/* Construtor da Classe de Controle */
 	public ControladorSalvamento(TelaCampoBatalha tela){
 		this.tela = tela;
 	}
-	/*Tratamento de Eventos de Botï¿½o*/
+	/* Tratamento de Eventos de Botão */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == TelaCampoBatalha.btnSave){

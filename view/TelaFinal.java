@@ -29,7 +29,7 @@ public class TelaFinal extends Frame implements ActionListener{
 		this.painel.setBounds(0, 0, 800, 600);
 		this.painel.add(lblTitle);
 		
-		lblText = new JLabel("ParabÃ©ns, jogador "+nomeVencedor+"!!! VocÃª venceu!!!");
+		lblText = new JLabel("Parabéns, jogador "+nomeVencedor+"!!! Você venceu!!!");
 		lblText.setBounds(280, -120, 800, 600);
 		this.painel.add(lblText);
 		
@@ -63,7 +63,7 @@ public class TelaFinal extends Frame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		/*verifica qual botão foi clicado */
+		/* verifica qual botão foi clicado */
 		if(e.getSource() == btnQuitGame){
 			
 			/* finaliza o jogo */

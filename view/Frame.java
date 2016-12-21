@@ -3,13 +3,13 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
-/*Classe de VisualizaÃ§Ã£o Geral*/
+/* Classe de Visualização Geral */
 @SuppressWarnings("serial")
 public class Frame extends JFrame{
 	protected JPanel painel = new JPanel();
 	private static Frame instancia = null;
 	
-	/*Construtor da Classe de VisualizaÃ§Ã£o*/
+	/* Construtor da Classe de Visualização */
 	public Frame(){	
 		this.setSize(800, 600);
 		setLayout(null);
@@ -23,7 +23,7 @@ public class Frame extends JFrame{
 		this.getContentPane().add(painel);
 	}
 	
-	/*Singleton*/
+	/* Singleton */
 	public static synchronized Frame getInstance(){
 		if(instancia == null){
 			instancia = new TelaJogadores();

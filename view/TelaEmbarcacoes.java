@@ -52,7 +52,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 		this.painel.setBounds(0, 0, 800, 600);
 		this.painel.add(lblTitle);
 
-		lbl1 = new JLabel("Jogador "+jogVez.getNome()+", distribua suas embarcações pelo tabuleiro:");
+		lbl1 = new JLabel("Jogador "+jogVez.nome+", distribua suas embarcações pelo tabuleiro:");
 		lbl1.setBounds(240, 50, 500, 140);
 		this.painel.add(lbl1);
 
