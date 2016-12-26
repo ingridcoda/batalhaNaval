@@ -114,7 +114,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 		/* adiciona hidroaviões enquanto o número de adicionados 
 		 * for menor que a quantidade total que deve existir */
 		while(i < qtdNavio3){
-			this.add(new Hidroaviao(Color.BLACK, x, y));
+			this.add(new Hidroaviao(Color.RED, x, y));
 			x += 80;
 			i++;
 		}
@@ -129,7 +129,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 		/* adiciona submarinos enquanto o número de adicionados 
 		 * for menor que a quantidade total que deve existir */
 		while(i < qtdNavio1){
-			this.add(new Submarino(Color.BLACK, x, y));
+			this.add(new Submarino(Color.ORANGE, x, y));
 			x += 100;
 			i++;
 		}
@@ -145,7 +145,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 		/* adiciona destroyers enquanto o número de adicionados 
 		 * for menor que a quantidade total que deve existir */
 		while(i < qtdNavio2){
-			this.add(new Destroyer(Color.BLACK, x, y));
+			this.add(new Destroyer(Color.YELLOW, x, y));
 			x += 110;
 			i++;
 		}
@@ -160,7 +160,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 		/* adiciona cruzadores enquanto o número de adicionados 
 		 * for menor que a quantidade total que deve existir */
 		while(i < qtdNavio4){
-			this.add(new Cruzador(Color.BLACK, x, y));
+			this.add(new Cruzador(Color.GREEN, x, y));
 			x += 120;
 			i++;
 		}
@@ -176,7 +176,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 		/* adiciona couraçados enquanto o número de adicionados 
 		 * for menor que a quantidade total que deve existir */
 		while(i < qtdNavio5){
-			this.add(new Couracado(Color.BLACK, x, y));
+			this.add(new Couracado(Color.CYAN, x, y));
 			i++;
 		}
 

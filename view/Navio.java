@@ -10,7 +10,9 @@ import controller.ControladorNavio;
 
 @SuppressWarnings("serial")
 public class Navio extends JPanel implements MouseListener{
+	@SuppressWarnings("unused")
 	private int x;
+	@SuppressWarnings("unused")
 	private int y;
 	private int tipo;
 	public boolean isSelected = false;
@@ -71,6 +73,17 @@ public class Navio extends JPanel implements MouseListener{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		if(tipo == 1){
+			this.cor = Color.ORANGE;
+		} else if(tipo == 2){
+			this.cor = Color.YELLOW;
+		} else if(tipo == 3){
+			this.cor = Color.RED;
+		} else if(tipo == 4){
+			this.cor = Color.GREEN;
+		} else if(tipo == 5){
+			this.cor = Color.CYAN;
+		}
 		if(isPositioned == false){
 			if(tipo != 3){
 				this.width = setTam(tipo);
@@ -88,7 +101,7 @@ public class Navio extends JPanel implements MouseListener{
 				if(isRotate == false){
 					g2d.draw(new Rectangle2D.Double(0, 20, width, height));
 					g2d.setColor(cor);
-					g2d.fill(new Rectangle2D.Double(0, 20, width, height));
+					g2d.fill(new Rectangle2D.Double(0, 20, width+1, height+1));
 					g2d.draw(new Rectangle2D.Double(20, 0, width, height));
 					g2d.setColor(cor);
 					g2d.fill(new Rectangle2D.Double(20, 0, width, height));
@@ -98,7 +111,7 @@ public class Navio extends JPanel implements MouseListener{
 				} else {
 					g2d.draw(new Rectangle2D.Double(0, 0, width, height));
 					g2d.setColor(cor);
-					g2d.fill(new Rectangle2D.Double(0, 0, width, height));
+					g2d.fill(new Rectangle2D.Double(0, 0, width+1, height+1));
 					g2d.draw(new Rectangle2D.Double(20, 20, width, height));
 					g2d.setColor(cor);
 					g2d.fill(new Rectangle2D.Double(20, 20, width, height));

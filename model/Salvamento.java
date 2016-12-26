@@ -14,6 +14,7 @@ public class Salvamento {
 
 
 	/* Salvamento de Jogo */
+	@SuppressWarnings("static-access")
 	public static void salvarJogo(TelaCampoBatalha tela){
 
 		/* cria nova janela de seleção de arquivos, atribui à variável 
@@ -76,6 +77,7 @@ public class Salvamento {
 	}
 
 	/* Carregamento de Jogo */
+	@SuppressWarnings("static-access")
 	public static void carregarJogo(TelaCampoBatalha tela){
 
 		/* cria nova janela de seleção de arquivos, atribui à variável 
