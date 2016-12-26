@@ -1,17 +1,13 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-
-import view.Navio;
 
 /* Classe de Negócio para criação do tipo Jogador */
 public class Jogador implements Observer{
 	public String nome;
 	public int numEmbarcacoes = 15;
 	public Matriz[][] matriz;
-	//public ArrayList<Navio> navios = new ArrayList<Navio>();
 	
 	/* Construtor da Classe de Negócio */
 	public Jogador(String nomeJogador){

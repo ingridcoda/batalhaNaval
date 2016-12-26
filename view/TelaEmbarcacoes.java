@@ -13,12 +13,12 @@ import model.Matriz;
 public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 	private static TelaEmbarcacoes instancia1  = null;
 	private static TelaEmbarcacoes instancia2  = null;
-	private boolean tabuleirosProntos = false;
+	public static boolean tabuleirosProntos = false;
 	private Font fonteTitulo = new Font("Monospaced", Font.BOLD, 60);
-	private JButton btnReady;
+	private static JButton btnReady;
 	private JLabel lblTitle;
 	private JLabel lbl1;
-	private int qtdEmbarcacoesADistribuir = 30;
+	private static int qtdEmbarcacoesADistribuir = 30;
 	public static Jogador jog1 = new Jogador("");
 	public static Jogador jog2 = new Jogador("");
 	public static Jogador jogVez = new Jogador("");
@@ -60,7 +60,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 		btnReady.setBounds(350, 500, 100, 30);
 		this.painel.add(btnReady);
 		btnReady.addActionListener(this);
-		//btnReady.setEnabled(false);
+		btnReady.setEnabled(false);
 
 		getContentPane().add(painel);
 		this.painel.setLayout(null);
@@ -92,10 +92,10 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 	}
 
 	/* Verificação de Tabuleiro Pronto */
-	public void verificaPronto(){
+	public static void verificaPronto(){
 
 		/* verifica se número de embarcações a distribuir é zero*/
-		if(this.qtdEmbarcacoesADistribuir == 0){
+		if(qtdEmbarcacoesADistribuir == 0){
 
 			/* seta a variável tabuleirosProntos como true e habilita o botão "Pronto" */
 			tabuleirosProntos = true;
@@ -223,7 +223,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 			/* matriz do jogador recebe matriz atualizada e quantidade 
 			 * de embarcações a distribuir é decrementado em um */
 			jogVez.matriz = (Matriz[][]) obj;
-			this.qtdEmbarcacoesADistribuir--;
+			qtdEmbarcacoesADistribuir--;
 
 		}
 

@@ -18,16 +18,7 @@ public class ControladorMatriz implements MouseListener{
 	/* Tratamentos de Eventos de Mouse */
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
-		int x = mouse.getX();
-        int y = mouse.getY();
-        System.out.println("Tabuleiro x: "+ x +" Tabuleiro y: "+ y); 
-		if(TelaEmbarcacoes.getInstance1().isVisible()){			
-			Facade.escolherPosicaoArma(matrizVez, mouse.getX(), mouse.getY());
-		} else if(TelaEmbarcacoes.getInstance2().isVisible()){
-			Facade.escolherPosicaoArma(matrizVez, mouse.getX(), mouse.getY());
-		} else {
-			Facade.atacar(matrizVez, mouse.getX(), mouse.getY());
-		}
+		
 	}
 
 	@Override
@@ -42,7 +33,16 @@ public class ControladorMatriz implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent mouse) {
-		
+		int x = mouse.getX();
+        int y = mouse.getY();
+        System.out.println("Tabuleiro x: "+ x +" Tabuleiro y: "+ y); 
+		if(TelaEmbarcacoes.getInstance1().isVisible()){			
+			Facade.escolherPosicaoArma(matrizVez, mouse.getX(), mouse.getY());
+		} else if(TelaEmbarcacoes.getInstance2().isVisible()){
+			Facade.escolherPosicaoArma(matrizVez, mouse.getX(), mouse.getY());
+		} else {
+			Facade.atacar(matrizVez, mouse.getX(), mouse.getY());
+		}
 	}
 
 	@Override

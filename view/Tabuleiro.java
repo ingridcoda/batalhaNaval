@@ -109,34 +109,31 @@ public class Tabuleiro extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
-		new ControladorMatriz(jogador.matriz, mouse).mouseClicked(mouse);	
+
 	}
 
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 
 	@Override
 	public void mousePressed(MouseEvent mouse) {
-		//new ControladorMatriz(jogador.matriz, mouse).mousePressed(mouse);
+		new ControladorMatriz(jogador.matriz, mouse).mousePressed(mouse);
 
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 

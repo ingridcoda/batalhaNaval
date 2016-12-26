@@ -12,6 +12,7 @@ public class Logica extends Observable{
 	private static int i, j;	
 	private boolean afundou = false;
 	private boolean acertou = false;
+	public boolean posicionou = false;
 	public boolean terminou = false;
 	public ArrayList<Observer> listaObserver = new ArrayList<Observer>();
 	public static String nomeVencedor;
@@ -54,9 +55,10 @@ public class Logica extends Observable{
 				/* atribui à posição da matriz o tipo da embarcação e notifica Observers */
 				Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
 				this.setChanged();
+				navio.isPositioned = true;
 				notifyObservers(Logica.matrizControleJogadorVez);
 
-			/* verifica se é destroyer */
+				/* verifica se é destroyer */
 			} else if (navio.getTipo() == 2){
 
 				/* verifica se não está rotacionado e se todas as casas a serem ocupadas são válidas */
@@ -66,19 +68,21 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
 					Logica.matrizControleJogadorVez[i+1][j].tipoArma = navio.getTipo();
 					this.setChanged();
+					navio.isPositioned = true;
 					notifyObservers(Logica.matrizControleJogadorVez);
 
-				/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
+					/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
 				} else if(navio.isRotate == true && verificaValidadePosicionamento(i,j+1) == true){
 
 					/* atribui às posições da matriz o tipo da embarcação e notifica Observers */
 					Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
 					Logica.matrizControleJogadorVez[i][j+1].tipoArma = navio.getTipo();
 					this.setChanged();
+					navio.isPositioned = true;
 					notifyObservers(Logica.matrizControleJogadorVez);
 				}
 
-			/* verifica se é hidroavião */
+				/* verifica se é hidroavião */
 			} else if(navio.getTipo() == 3){
 
 				/* verifica se não está rotacionado e se todas as casas a serem ocupadas são válidas */
@@ -89,9 +93,10 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i+1][j-1].tipoArma = navio.getTipo();
 					Logica.matrizControleJogadorVez[i+2][j].tipoArma = navio.getTipo();
 					this.setChanged();
+					navio.isPositioned = true;
 					notifyObservers(Logica.matrizControleJogadorVez);
 
-				/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
+					/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
 				} else if(navio.isRotate == true && verificaValidadePosicionamento(i+1,j+1) == true && verificaValidadePosicionamento(i+2,j) == true){
 
 					/* atribui às posições da matriz o tipo da embarcação e notifica Observers */
@@ -99,11 +104,12 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i+1][j+1].tipoArma = navio.getTipo();
 					Logica.matrizControleJogadorVez[i+2][j].tipoArma = navio.getTipo();
 					this.setChanged();
+					navio.isPositioned = true;
 					notifyObservers(Logica.matrizControleJogadorVez);
 
 				}
 
-			/* verifica se é cruzador */
+				/* verifica se é cruzador */
 			} else if(navio.getTipo() == 4){
 
 				/* verifica se não está rotacionado e se todas as casas a serem ocupadas são válidas */
@@ -115,9 +121,10 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i+2][j].tipoArma = navio.getTipo();
 					Logica.matrizControleJogadorVez[i+3][j].tipoArma = navio.getTipo();
 					this.setChanged();
+					navio.isPositioned = true;
 					notifyObservers(Logica.matrizControleJogadorVez);
 
-				/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
+					/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
 				} else if(navio.isRotate == true && verificaValidadePosicionamento(i,j+1) == true && verificaValidadePosicionamento(i,j+2) == true && verificaValidadePosicionamento(i,j+3) == true){
 
 					/* atribui às posições da matriz o tipo da embarcação e notifica Observers */
@@ -126,11 +133,12 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i][j+2].tipoArma = navio.getTipo();
 					Logica.matrizControleJogadorVez[i][j+3].tipoArma = navio.getTipo();
 					this.setChanged();
+					navio.isPositioned = true;
 					notifyObservers(Logica.matrizControleJogadorVez);
 
 				}
 
-			/* se entrar aqui, é couraçado */
+				/* se entrar aqui, é couraçado */
 			} else {
 
 				/* verifica se não está rotacionado e se todas as casas a serem ocupadas são válidas */
@@ -143,9 +151,10 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i+3][j].tipoArma = navio.getTipo();
 					Logica.matrizControleJogadorVez[i+4][j].tipoArma = navio.getTipo();
 					this.setChanged();
+					navio.isPositioned = true;
 					notifyObservers(Logica.matrizControleJogadorVez);
 
-				/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
+					/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
 				} else if(navio.isRotate == true && verificaValidadePosicionamento(i,j+1) == true && verificaValidadePosicionamento(i,j+2) == true && verificaValidadePosicionamento(i,j+3) == true && verificaValidadePosicionamento(i,j+4) == true){
 
 					/* atribui às posições da matriz o tipo da embarcação e notifica Observers */
@@ -155,6 +164,7 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i][j+3].tipoArma = navio.getTipo();
 					Logica.matrizControleJogadorVez[i][j+4].tipoArma = navio.getTipo();
 					this.setChanged();
+					navio.isPositioned = true;
 					notifyObservers(Logica.matrizControleJogadorVez);
 
 				}
@@ -181,7 +191,7 @@ public class Logica extends Observable{
 				/* incremento minha variável de posicionamento i em um */
 				i++;
 
-			/* senão, encontrei meu i */	
+				/* senão, encontrei meu i */	
 			} else {
 				/* saio do looping */
 				break;
@@ -199,7 +209,7 @@ public class Logica extends Observable{
 				/* incremento minha variável de posicionamento j em um */
 				j++;
 
-			/* senão, encontrei meu j */		
+				/* senão, encontrei meu j */		
 			} else {
 				/* saio do looping */
 				break;
@@ -230,49 +240,17 @@ public class Logica extends Observable{
 		if(i > 0 && i < 14 && j > 0 && j < 14){
 
 			/* verifica se arredores estão vazios, se sim, mantém i e j como válidos e retorna true */
-			if(Logica.matrizControleJogadorVez[i-1][j-1].tipoArma == 0){
+			if((Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
+				Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + 	
+				Logica.matrizControleJogadorVez[i][j+1].tipoArma + Logica.matrizControleJogadorVez[i+1][j-1].tipoArma +
+				Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma == 0)
+				&& (i+4 < 15 && j+4 < 15) && (i-1 >= 0 && j-1 >= 0) && (i > 0 && i < 14 && j > 0 && j < 14) ){
+
 				i = Logica.j;
 				j = Logica.i;
-				if(Logica.matrizControleJogadorVez[i-1][j].tipoArma == 0){
-					i = Logica.j;
-					j = Logica.i;
-					if(Logica.matrizControleJogadorVez[i-1][j+1].tipoArma == 0){
-						i = Logica.j;
-						j = Logica.i;
-						if(Logica.matrizControleJogadorVez[i][j-1].tipoArma == 0){
-							i = Logica.j;
-							j = Logica.i;
-							if(Logica.matrizControleJogadorVez[i][j+1].tipoArma == 0){
-								i = Logica.j;
-								j = Logica.i;
-								if(Logica.matrizControleJogadorVez[i+1][j-1].tipoArma == 0){
-									i = Logica.j;
-									j = Logica.i;
-									if(Logica.matrizControleJogadorVez[i+1][j].tipoArma == 0){
-										i = Logica.j;
-										j = Logica.i;
-										if(Logica.matrizControleJogadorVez[i+1][j+1].tipoArma == 0){
-											i = Logica.j;
-											j = Logica.i;
-											if(i+4 < 15 && j+4 < 15){
-												i = Logica.j;
-												j = Logica.i;
-												if(i-1 >= 0 && j-1 >= 0){
-													i = Logica.j;
-													j = Logica.i;
-													return true;
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+				return true;
 			}
 		}
-
 		/* senão, retorna false */
 		return false;	
 
@@ -283,7 +261,7 @@ public class Logica extends Observable{
 
 		/* verifica se nos arredores do local do tiro dado existe parte de um destroyer */
 		if(matrizControleJogadorVez[i][j+1].tipoArma == 2 || matrizControleJogadorVez[i][j-1].tipoArma == 2 
-				|| matrizControleJogadorVez[i+1][j].tipoArma == 2 || matrizControleJogadorVez[i-1][j].tipoArma == 2){
+		|| matrizControleJogadorVez[i+1][j].tipoArma == 2 || matrizControleJogadorVez[i-1][j].tipoArma == 2){
 
 			/* marca como acerto apenas, isto é, apenas atribui zero ao local do tiro */
 			matrizControleJogadorVez[i][j].tipoArma = 0;
@@ -303,10 +281,10 @@ public class Logica extends Observable{
 
 		/* verifica se nos arredores do local do tiro dado existe parte de um hidroavião */
 		if(matrizControleJogadorVez[i-1][j+1].tipoArma == 3 || matrizControleJogadorVez[i][j+2].tipoArma == 3
-				|| matrizControleJogadorVez[i+1][j-1].tipoArma == 3 || matrizControleJogadorVez[i+1][j+1].tipoArma == 3
-				|| matrizControleJogadorVez[i-1][j-1].tipoArma == 3 || matrizControleJogadorVez[i][j-2].tipoArma == 3
-				|| matrizControleJogadorVez[i+1][j+1].tipoArma == 3 || matrizControleJogadorVez[i+2][j].tipoArma == 3
-				|| matrizControleJogadorVez[i-2][j].tipoArma == 3){
+		|| matrizControleJogadorVez[i+1][j-1].tipoArma == 3 || matrizControleJogadorVez[i+1][j+1].tipoArma == 3
+		|| matrizControleJogadorVez[i-1][j-1].tipoArma == 3 || matrizControleJogadorVez[i][j-2].tipoArma == 3
+		|| matrizControleJogadorVez[i+1][j+1].tipoArma == 3 || matrizControleJogadorVez[i+2][j].tipoArma == 3
+		|| matrizControleJogadorVez[i-2][j].tipoArma == 3){
 
 			/* marca como acerto apenas, isto é, apenas atribui zero ao local do tiro */
 			matrizControleJogadorVez[i][j].tipoArma = 0;
@@ -324,9 +302,9 @@ public class Logica extends Observable{
 
 		/* verifica se nos arredores do local do tiro dado existe parte de um cruzador */
 		if(matrizControleJogadorVez[i][j+1].tipoArma == 4 || matrizControleJogadorVez[i][j+2].tipoArma == 4 || matrizControleJogadorVez[i][j+3].tipoArma == 4 
-				|| matrizControleJogadorVez[i][j-1].tipoArma == 4 || matrizControleJogadorVez[i][j-2].tipoArma == 4 || matrizControleJogadorVez[i][j-3].tipoArma == 4
-				|| matrizControleJogadorVez[i-1][j].tipoArma == 4 || matrizControleJogadorVez[i-2][j].tipoArma == 4 || matrizControleJogadorVez[i-3][j].tipoArma == 4
-				|| matrizControleJogadorVez[i+1][j].tipoArma == 4 || matrizControleJogadorVez[i+2][j].tipoArma == 4 || matrizControleJogadorVez[i+3][j].tipoArma == 4){
+		|| matrizControleJogadorVez[i][j-1].tipoArma == 4 || matrizControleJogadorVez[i][j-2].tipoArma == 4 || matrizControleJogadorVez[i][j-3].tipoArma == 4
+		|| matrizControleJogadorVez[i-1][j].tipoArma == 4 || matrizControleJogadorVez[i-2][j].tipoArma == 4 || matrizControleJogadorVez[i-3][j].tipoArma == 4
+		|| matrizControleJogadorVez[i+1][j].tipoArma == 4 || matrizControleJogadorVez[i+2][j].tipoArma == 4 || matrizControleJogadorVez[i+3][j].tipoArma == 4){
 
 			/* marca como acerto apenas, isto é, apenas atribui zero ao local do tiro */
 			matrizControleJogadorVez[i][j].tipoArma = 0;
@@ -344,9 +322,9 @@ public class Logica extends Observable{
 
 		/* verifica se nos arredores do local do tiro dado existe parte de um couraçado */
 		if(matrizControleJogadorVez[i][j+1].tipoArma == 5 || matrizControleJogadorVez[i][j+2].tipoArma == 5 || matrizControleJogadorVez[i][j+3].tipoArma == 5 || matrizControleJogadorVez[i][j+4].tipoArma == 5 
-				|| matrizControleJogadorVez[i][j-1].tipoArma == 5 || matrizControleJogadorVez[i][j-2].tipoArma == 5 || matrizControleJogadorVez[i][j-3].tipoArma == 5 || matrizControleJogadorVez[i][j-4].tipoArma == 5
-				|| matrizControleJogadorVez[i-1][j].tipoArma == 5 || matrizControleJogadorVez[i-2][j].tipoArma == 5 || matrizControleJogadorVez[i-3][j].tipoArma == 5 || matrizControleJogadorVez[i-4][j].tipoArma == 5
-				|| matrizControleJogadorVez[i+1][j].tipoArma == 5 || matrizControleJogadorVez[i+2][j].tipoArma == 5 || matrizControleJogadorVez[i+3][j].tipoArma == 5 || matrizControleJogadorVez[i+4][j].tipoArma == 5){
+		|| matrizControleJogadorVez[i][j-1].tipoArma == 5 || matrizControleJogadorVez[i][j-2].tipoArma == 5 || matrizControleJogadorVez[i][j-3].tipoArma == 5 || matrizControleJogadorVez[i][j-4].tipoArma == 5
+		|| matrizControleJogadorVez[i-1][j].tipoArma == 5 || matrizControleJogadorVez[i-2][j].tipoArma == 5 || matrizControleJogadorVez[i-3][j].tipoArma == 5 || matrizControleJogadorVez[i-4][j].tipoArma == 5
+		|| matrizControleJogadorVez[i+1][j].tipoArma == 5 || matrizControleJogadorVez[i+2][j].tipoArma == 5 || matrizControleJogadorVez[i+3][j].tipoArma == 5 || matrizControleJogadorVez[i+4][j].tipoArma == 5){
 
 			/* marca como acerto apenas, isto é, apenas atribui zero ao local do tiro */
 			matrizControleJogadorVez[i][j].tipoArma = 0;
@@ -404,7 +382,7 @@ public class Logica extends Observable{
 				setStatus(coordX, coordY);
 				matrizControleJogadorVez[i][j].foiClicado = true;
 
-			/* verifica se é um destroyer */	
+				/* verifica se é um destroyer */	
 			} else if(tipoArma == 2){
 
 				/*marca como clicado e acertado e chama método para alterar status de acerto e verificar arredores */
@@ -413,7 +391,7 @@ public class Logica extends Observable{
 				matrizControleJogadorVez[i][j].foiClicado = true;
 				verificaArredoresDestroyer(Logica.matrizControleJogadorVez);
 
-			/* verifica se é um hidroavião */		
+				/* verifica se é um hidroavião */		
 			} else if(tipoArma == 3){
 
 				/*marca como clicado e acertado e chama método para alterar status de acerto e verificar arredores */
@@ -422,7 +400,7 @@ public class Logica extends Observable{
 				matrizControleJogadorVez[i][j].foiClicado = true;
 				verificaArredoresHidroaviao(Logica.matrizControleJogadorVez);
 
-			/* verifica se é um cruzador */	
+				/* verifica se é um cruzador */	
 			} else if(tipoArma == 4){
 
 				/*marca como clicado e acertado e chama método para alterar status de acerto e verificar arredores */
@@ -431,7 +409,7 @@ public class Logica extends Observable{
 				matrizControleJogadorVez[i][j].foiClicado = true;
 				verificaArredoresCruzador(Logica.matrizControleJogadorVez);
 
-			/* verifica se é um couraçado */		
+				/* verifica se é um couraçado */		
 			} else if(tipoArma == 5){
 
 				/*marca como clicado e acertado e chama método para alterar status de acerto e verificar arredores */
@@ -478,7 +456,7 @@ public class Logica extends Observable{
 			nomeVencedor = TelaJogadores.getNomeJogador2();
 			terminou = true;
 
-		/* verifica se o numero de embarcações do segundo jogador é zero */	
+			/* verifica se o numero de embarcações do segundo jogador é zero */	
 		} else if(Facade.j2.numEmbarcacoes == 0){
 
 			/* atribuo o nome do primeiro jogador à variável nomeJogador e variável terminou recebe true */

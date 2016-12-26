@@ -61,6 +61,7 @@ public class Facade {
 		 * para o segundo jogador e a adiciona à lista de Observers */
 		TelaEmbarcacoes.getInstance2();	
 		l.listaObserver.add(TelaEmbarcacoes.getInstance2());
+		TelaEmbarcacoes.verificaPronto();
 
 	}
 
@@ -69,7 +70,7 @@ public class Facade {
 		/* chama método de posicionamento de embarcações definido na classe lógica,
 		 * passando o último navio clicado, a matriz e as coordenadas x e y clicadas */
 		l.posicionarArma(ControladorNavio.navioClicado, matriz, x, y);
-
+		
 	}
 
 	/* Fase de Ataques */

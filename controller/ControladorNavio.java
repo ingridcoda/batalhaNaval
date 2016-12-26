@@ -15,34 +15,31 @@ public class ControladorNavio implements MouseListener{
 	/* Tratamentos de Eventos de Mouse */
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
-		int x = mouse.getX();
-        int y = mouse.getY();
-        System.out.println("Navio x: "+ x +" Navio y: "+ y); 
-        navioClicado = verificaUltimoSelecionado(mouse);
+		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent mouse) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent mouse) {
-		// TODO Auto-generated method stub
-		
+				
 	}
 
 	@Override
 	public void mousePressed(MouseEvent mouse) {
-		// TODO Auto-generated method stub
+		int x = mouse.getX();
+        int y = mouse.getY();
+        System.out.println("Navio x: "+ x +" Navio y: "+ y); 
+        navioClicado = verificaUltimoSelecionado(mouse);
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent mouse) {
-		// TODO Auto-generated method stub
-		
+				
 	}
 	
 	
