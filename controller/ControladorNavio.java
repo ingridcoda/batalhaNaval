@@ -39,7 +39,7 @@ public class ControladorNavio implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent mouse) {
-				
+
 	}
 	
 	

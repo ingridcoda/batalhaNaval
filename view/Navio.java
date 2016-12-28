@@ -142,14 +142,7 @@ public class Navio extends JPanel implements MouseListener{
 		public void mousePressed(MouseEvent mouse) {
 			//if(SwingUtilities.isLeftMouseButton(mouse)){
 			this.isSelected = !isSelected;
-			//if(this.isSelected){
-			this.setCor(Color.RED);
-			this.repaint();
-			//} else {
-			//this.setCor(Color.BLACK);
-			this.repaint();
-			//}
-			//}		
+			//}	
 			if(SwingUtilities.isRightMouseButton(mouse) && isSelected){
 				this.isRotate = !isRotate;
 				if(tipo != 3){

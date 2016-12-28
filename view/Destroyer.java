@@ -1,10 +1,9 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.*;
 
 @SuppressWarnings("serial")
-public class Destroyer extends Navio implements ActionListener, MouseListener{
+public class Destroyer extends Navio{
 	private int tipo = 2;
 	private Color cor;
 
@@ -14,7 +13,6 @@ public class Destroyer extends Navio implements ActionListener, MouseListener{
 		this.addMouseListener(this);
 		this.setBackground(Color.WHITE);
 		this.setSize(40, 20);
-		//setFocusable(true);
 		this.setVisible(true);
 	}
 
@@ -38,38 +36,5 @@ public class Destroyer extends Navio implements ActionListener, MouseListener{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 	}
-	@Override
-	public void mouseClicked(MouseEvent mouse) {
-		super.mouseClicked(mouse);
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }

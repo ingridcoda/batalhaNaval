@@ -56,6 +56,7 @@ public class Logica extends Observable{
 				Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
 				this.setChanged();
 				navio.isPositioned = true;
+				System.out.println("Posicionou submarino");
 				notifyObservers(Logica.matrizControleJogadorVez);
 
 				/* verifica se é destroyer */
@@ -69,6 +70,7 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i+1][j].tipoArma = navio.getTipo();
 					this.setChanged();
 					navio.isPositioned = true;
+					System.out.println("Posicionou destroyer não rotacionado");
 					notifyObservers(Logica.matrizControleJogadorVez);
 
 					/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
@@ -79,6 +81,7 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i][j+1].tipoArma = navio.getTipo();
 					this.setChanged();
 					navio.isPositioned = true;
+					System.out.println("Posicionou destroyer rotacionado");
 					notifyObservers(Logica.matrizControleJogadorVez);
 				}
 
@@ -94,6 +97,7 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i+2][j].tipoArma = navio.getTipo();
 					this.setChanged();
 					navio.isPositioned = true;
+					System.out.println("Posicionou hidroavião não rotacionado");
 					notifyObservers(Logica.matrizControleJogadorVez);
 
 					/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
@@ -102,9 +106,10 @@ public class Logica extends Observable{
 					/* atribui às posições da matriz o tipo da embarcação e notifica Observers */
 					Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
 					Logica.matrizControleJogadorVez[i+1][j+1].tipoArma = navio.getTipo();
-					Logica.matrizControleJogadorVez[i+2][j].tipoArma = navio.getTipo();
+					Logica.matrizControleJogadorVez[i][j+2].tipoArma = navio.getTipo();
 					this.setChanged();
 					navio.isPositioned = true;
+					System.out.println("Posicionou hidroavião rotacionado");
 					notifyObservers(Logica.matrizControleJogadorVez);
 
 				}
@@ -122,6 +127,7 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i+3][j].tipoArma = navio.getTipo();
 					this.setChanged();
 					navio.isPositioned = true;
+					System.out.println("Posicionou cruzador não rotacionado");
 					notifyObservers(Logica.matrizControleJogadorVez);
 
 					/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
@@ -134,6 +140,7 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i][j+3].tipoArma = navio.getTipo();
 					this.setChanged();
 					navio.isPositioned = true;
+					System.out.println("Posicionou cruzador rotacionado");
 					notifyObservers(Logica.matrizControleJogadorVez);
 
 				}
@@ -152,6 +159,7 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i+4][j].tipoArma = navio.getTipo();
 					this.setChanged();
 					navio.isPositioned = true;
+					System.out.println("Posicionou couraçado não rotacionado");
 					notifyObservers(Logica.matrizControleJogadorVez);
 
 					/* verifica se está rotacionado e se todas as casas a serem ocupadas são válidas */
@@ -165,6 +173,7 @@ public class Logica extends Observable{
 					Logica.matrizControleJogadorVez[i][j+4].tipoArma = navio.getTipo();
 					this.setChanged();
 					navio.isPositioned = true;
+					System.out.println("Posicionou couraçado rotacionado");
 					notifyObservers(Logica.matrizControleJogadorVez);
 
 				}
@@ -176,6 +185,14 @@ public class Logica extends Observable{
 		/* atribui zero às variáveis de posicionamento i e j */
 		i = 0;
 		j = 0;
+		
+		for(int i = 0; i < 15; i++){
+			for (int j = 0; j < 15; j++){
+				System.out.print(matrizControleJogadorVez[j][i].tipoArma+ " ");
+			}
+			System.out.println("");
+		}
+		
 
 	}
 
@@ -244,7 +261,7 @@ public class Logica extends Observable{
 				Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + 	
 				Logica.matrizControleJogadorVez[i][j+1].tipoArma + Logica.matrizControleJogadorVez[i+1][j-1].tipoArma +
 				Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma == 0)
-				&& (i+4 < 15 && j+4 < 15) && (i-1 >= 0 && j-1 >= 0) && (i > 0 && i < 14 && j > 0 && j < 14) ){
+				&& (i+4 < 15 && j+4 < 15) && (i-1 >= 0 && j-1 >= 0)){
 
 				i = Logica.j;
 				j = Logica.i;

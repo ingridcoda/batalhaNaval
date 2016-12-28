@@ -60,7 +60,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 		btnReady.setBounds(350, 500, 100, 30);
 		this.painel.add(btnReady);
 		btnReady.addActionListener(this);
-		btnReady.setEnabled(false);
+		//btnReady.setEnabled(false);
 
 		getContentPane().add(painel);
 		this.painel.setLayout(null);
@@ -187,29 +187,30 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 	public void actionPerformed(ActionEvent e) {
 
 		/* verifica se botão foi clicado e tabuleiro está pronto */
-		if(e.getSource() == btnReady && tabuleirosProntos == false){
+		//if(e.getSource() == btnReady && tabuleirosProntos == false){
 
 			/* seta a tela de posicionamento de embarcações como invisível, 
 			 * a encerra e chama método de posicionamento das embarcações 
 			 * do segundo jogador, que está definido na classe de fachada */
-			this.setVisible(false);
-			this.dispose();
-			Facade.posicionarArmasJogador2(jog2.nome);
+			//this.setVisible(false);
+			//this.dispose();
+			//Facade.posicionarArmasJogador2(jog2.nome);
 
-		} else if (e.getSource() == btnReady && tabuleirosProntos == true){
+		//} else if (e.getSource() == btnReady && tabuleirosProntos == true){
 
 			/* seta a tela de posicionamento de embarcações como 
 			 * invisível, a encerra e chama método de início de fase 
 			 * de ataques, que está definido na classe de fachada */
 			this.setVisible(false);
+			this.dispose();
 			Facade.iniciarAtaques();
 
-		} else {
+		//} else {
 
 			/* finaliza o jogo */
-			System.exit(1);
+			//System.exit(1);
 
-		}
+		//}
 
 	}
 
