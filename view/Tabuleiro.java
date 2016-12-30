@@ -42,7 +42,7 @@ public class Tabuleiro extends JPanel implements MouseListener{
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
 					
 				/* trata caso de tela de posicionamento */	
-				} else if(jogador.matriz[i][j].getTipoArma() > 0 && (TelaEmbarcacoes.getInstance1().isVisible() || TelaEmbarcacoes.getInstance2().isVisible())){
+				} else if(jogador.matriz[i][j].getTipoArma() > 0 && (TelaEmbarcacoes.getInstance1().isVisible() == true || TelaEmbarcacoes.getInstance2().isVisible() == true)){
 					g2d.setColor(Color.BLACK);
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
 					
