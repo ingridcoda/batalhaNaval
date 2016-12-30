@@ -27,11 +27,11 @@ public class Logica extends Observable{
 
 	/* Observer */
 	public void notifyObservers(Object obj){
-		if(this.hasChanged()){
-			for(Observer obs: listaObserver){
-				obs.update(this, obj);
-			}
+		//if(this.hasChanged()){
+		for(Observer obs: listaObserver){
+			obs.update(this, obj);
 		}
+		//}
 	}
 
 	/* Posicionamento de Embarca��o */
@@ -48,7 +48,7 @@ public class Logica extends Observable{
 
 
 		/* verifica se � submarino */
-		if(navio.getTipo() == 1 && verificaValidadePosicionamentoSubmarino(i,j) == true){	
+		if(navio.getTipo() == 1 && verificaValidadePosicionamento(i,j) == true){	
 
 			/* atribui � posi��o da matriz o tipo da embarca��o e notifica Observers */
 			Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
@@ -58,36 +58,43 @@ public class Logica extends Observable{
 			notifyObservers(Logica.matrizControleJogadorVez);
 
 			/* verifica se � destroyer */
-		} else if (navio.getTipo() == 2 && verificaValidadePosicionamentoDestroyer(i, j, navio.isRotate) == true){
+		} else if (navio.getTipo() == 2){
 
 			/* verifica se n�o est� rotacionado e se todas as casas a serem ocupadas s�o v�lidas */
 			if(navio.isRotate == false){
+				
+				if(verificaValidadePosicionamento(i, j) == true && verificaValidadePosicionamento(i+1, j) == true){
 
-				/* atribui �s posi��es da matriz o tipo da embarca��o e notifica Observers */
-				Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
-				Logica.matrizControleJogadorVez[i+1][j].tipoArma = navio.getTipo();
-				this.setChanged();
-				navio.isPositioned = true;
-				System.out.println("Posicionou destroyer n�o rotacionado");
-				notifyObservers(Logica.matrizControleJogadorVez);
+					/* atribui �s posi��es da matriz o tipo da embarca��o e notifica Observers */
+					Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
+					Logica.matrizControleJogadorVez[i+1][j].tipoArma = navio.getTipo();
+					this.setChanged();
+					navio.isPositioned = true;
+					System.out.println("Posicionou destroyer n�o rotacionado");
+					notifyObservers(Logica.matrizControleJogadorVez);
 
+				}
+				
 				/* verifica se est� rotacionado e se todas as casas a serem ocupadas s�o v�lidas */
 			} else if(navio.isRotate == true){
-
-				/* atribui �s posi��es da matriz o tipo da embarca��o e notifica Observers */
-				Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
-				Logica.matrizControleJogadorVez[i][j+1].tipoArma = navio.getTipo();
-				this.setChanged();
-				navio.isPositioned = true;
-				System.out.println("Posicionou destroyer rotacionado");
-				notifyObservers(Logica.matrizControleJogadorVez);
+				
+				if(verificaValidadePosicionamento(i, j) == true && verificaValidadePosicionamento(i, j+1) == true){
+					/* atribui �s posi��es da matriz o tipo da embarca��o e notifica Observers */
+					Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
+					Logica.matrizControleJogadorVez[i][j+1].tipoArma = navio.getTipo();
+					this.setChanged();
+					navio.isPositioned = true;
+					System.out.println("Posicionou destroyer rotacionado");
+					notifyObservers(Logica.matrizControleJogadorVez);
+				}
+				
 			}
 
 			/* verifica se � hidroavi�o */
-		} else if(navio.getTipo() == 3 && verificaValidadePosicionamentoHidroaviao(i, j, navio.isRotate) == true){
+		} else if(navio.getTipo() == 3){
 
 			/* verifica se n�o est� rotacionado e se todas as casas a serem ocupadas s�o v�lidas */
-			if(navio.isRotate == false){
+			if(navio.isRotate == false && verificaValidadePosicionamento(i, j) == true && verificaValidadePosicionamento(i+1, j-1) == true && verificaValidadePosicionamento(i+2, j) == true){
 
 				/* atribui �s posi��es da matriz o tipo da embarca��o e notifica Observers */
 				Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
@@ -99,7 +106,7 @@ public class Logica extends Observable{
 				notifyObservers(Logica.matrizControleJogadorVez);
 
 				/* verifica se est� rotacionado e se todas as casas a serem ocupadas s�o v�lidas */
-			} else if(navio.isRotate == true){
+			} else if(navio.isRotate == true && verificaValidadePosicionamento(i, j) == true && verificaValidadePosicionamento(i+1, j+1) == true && verificaValidadePosicionamento(i, j+2) == true){
 
 				/* atribui �s posi��es da matriz o tipo da embarca��o e notifica Observers */
 				Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
@@ -113,10 +120,10 @@ public class Logica extends Observable{
 			}
 
 			/* verifica se � cruzador */
-		} else if(navio.getTipo() == 4 && verificaValidadePosicionamentoCruzador(i, j, navio.isRotate) == true){
+		} else if(navio.getTipo() == 4){
 
 			/* verifica se n�o est� rotacionado e se todas as casas a serem ocupadas s�o v�lidas */
-			if(navio.isRotate == false){
+			if(navio.isRotate == false && verificaValidadePosicionamento(i, j) == true && verificaValidadePosicionamento(i+1, j) == true && verificaValidadePosicionamento(i+2, j) == true && verificaValidadePosicionamento(i+3, j) == true){
 
 				/* atribui �s posi��es da matriz o tipo da embarca��o e notifica Observers */
 				Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
@@ -129,7 +136,7 @@ public class Logica extends Observable{
 				notifyObservers(Logica.matrizControleJogadorVez);
 
 				/* verifica se est� rotacionado e se todas as casas a serem ocupadas s�o v�lidas */
-			} else if(navio.isRotate == true){
+			} else if(navio.isRotate == true && verificaValidadePosicionamento(i, j) == true && verificaValidadePosicionamento(i, j+1) == true && verificaValidadePosicionamento(i, j+2) == true && verificaValidadePosicionamento(i, j+3) == true){
 
 				/* atribui �s posi��es da matriz o tipo da embarca��o e notifica Observers */
 				Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
@@ -144,10 +151,10 @@ public class Logica extends Observable{
 			}
 
 			/* se entrar aqui, � coura�ado */
-		} else if(navio.getTipo() == 5 && verificaValidadePosicionamentoCouracado(i, j, navio.isRotate) == true){
+		} else if(navio.getTipo() == 5){
 
 			/* verifica se n�o est� rotacionado e se todas as casas a serem ocupadas s�o v�lidas */
-			if(navio.isRotate == false){
+			if(navio.isRotate == false && verificaValidadePosicionamento(i, j) == true && verificaValidadePosicionamento(i+1, j) == true && verificaValidadePosicionamento(i+2, j) == true && verificaValidadePosicionamento(i+3, j) == true && verificaValidadePosicionamento(i+4, j) == true){
 
 				/* atribui �s posi��es da matriz o tipo da embarca��o e notifica Observers */
 				Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
@@ -161,7 +168,7 @@ public class Logica extends Observable{
 				notifyObservers(Logica.matrizControleJogadorVez);
 
 				/* verifica se est� rotacionado e se todas as casas a serem ocupadas s�o v�lidas */
-			} else if(navio.isRotate == true){
+			} else if(navio.isRotate == true && verificaValidadePosicionamento(i, j) == true && verificaValidadePosicionamento(i, j+1) == true && verificaValidadePosicionamento(i, j+2) == true && verificaValidadePosicionamento(i, j+3) == true && verificaValidadePosicionamento(i, j+4) == true){
 
 				/* atribui �s posi��es da matriz o tipo da embarca��o e notifica Observers */
 				Logica.matrizControleJogadorVez[i][j].tipoArma = navio.getTipo();
@@ -181,14 +188,14 @@ public class Logica extends Observable{
 		/* atribui zero �s vari�veis de posicionamento i e j */
 		i = 0;
 		j = 0;
-		
+
 		for(int i = 0; i < 15; i++){
 			for (int j = 0; j < 15; j++){
 				System.out.print(matrizControleJogadorVez[j][i].tipoArma+ " ");
 			}
 			System.out.println("");
 		}
-		
+
 
 	}
 
@@ -240,9 +247,9 @@ public class Logica extends Observable{
 		System.out.println("Valor de j result: "+j);
 
 	}	
-	
+
 	/* Verifica��o de posi��o v�lida */
-	private boolean verificaValidadePosicionamentoSubmarino(int i, int j){  ////////OK!!!! TESTA TODAS AS BORDAS DO SUBMARINO E SEU PRÓPRIO POSICIONAMENTO
+	private boolean verificaValidadePosicionamento(int i, int j){  
 
 		/* atribui os valores das minhas vari�veis globais de posicionamento i 
 		 * e j para as vari�veis locais de posicionamento i e j por seguran�a */
@@ -250,203 +257,84 @@ public class Logica extends Observable{
 		j = Logica.i;
 
 		/*verifica se i e j est�o dentro do limite da matriz */
-		if(i > 0 && i < 14 && j > 0 && j < 14){
+		if(i > 0 && i < 14 && j > 0 && j < 14 && (Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
+				Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
+				Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma == 0)){
 
-			/* verifica se arredores est�o vazios, se sim, mant�m i e j como v�lidos e retorna true */
-			if(Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
-			   Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma == 0){
+			i = Logica.j;
+			j = Logica.i;
+			return true;
 
-				i = Logica.j;
-				j = Logica.i;
-				return true;
-			}
+
+		} else if(i == 0 && j != 0 && j != 14 && (Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
+				Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma == 0)){
+
+			i = Logica.j;
+			j = Logica.i;
+			return true;
+
+		} else if(i == 14 && j != 0 && j != 14 && (Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
+				Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma == 0)){
+
+			i = Logica.j;
+			j = Logica.i;
+			return true;
+
+		} else if(j == 0 && i != 0 && i != 14 &&(Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j+1].tipoArma +  
+				Logica.matrizControleJogadorVez[i][j+1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma == 0)){
+
+			i = Logica.j;
+			j = Logica.i;
+			return true;
+
+		} else if(j == 14 && i != 0 && i != 14 && (Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
+				Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma == 0)){
+
+			i = Logica.j;
+			j = Logica.i;
+			return true;
+
+		} else if(i == 0 && j == 0 && (Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
+				Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma == 0)){
+
+			i = Logica.j;
+			j = Logica.i;
+			return true;
+
+		} else if(i == 14 && j == 14 && (Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + 
+				Logica.matrizControleJogadorVez[i-1][j].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma == 0)){
+
+			i = Logica.j;
+			j = Logica.i;
+			return true;
+
+		} else if(i == 0 && j == 14 && (Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + 
+				Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma == 0)){
+
+			i = Logica.j;
+			j = Logica.i;
+			return true;
+
+		} else if(i == 14 && j == 0 && (Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma +
+				Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma == 0)){
+
+			i = Logica.j;
+			j = Logica.i;
+			return true;
+
 		}
+
 		/* sen�o, retorna false */
 		return false;	
 
 	}
-		
-	/* Verifica��o de posi��o v�lida */
-	private boolean verificaValidadePosicionamentoDestroyer(int i, int j, boolean rotacionado){  
 
-		/* atribui os valores das minhas vari�veis globais de posicionamento i 
-		 * e j para as vari�veis locais de posicionamento i e j por seguran�a */
-		i = Logica.j;
-		j = Logica.i;
-
-		/*verifica se i e j est�o dentro do limite da matriz */
-		if(i > 0 && i < 14 && j > 0 && j < 14 && i+1 < 15 && (rotacionado == false)){
-
-			/* verifica se arredores est�o vazios, se sim, mant�m i e j como v�lidos e retorna true */
-			if(Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
-			   Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i+2][j-1].tipoArma + Logica.matrizControleJogadorVez[i+2][j].tipoArma + Logica.matrizControleJogadorVez[i+2][j+1].tipoArma == 0){
-
-				i = Logica.j;
-				j = Logica.i;
-				return true;
-			} 
-			
-		} else if (i > 0 && i < 14 && j > 0 && j < 14 && j+1 < 15 && (rotacionado == true)) {
-			
-			/* verifica se arredores est�o vazios, se sim, mant�m i e j como v�lidos e retorna true */
-			if(Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
-			   Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i-1][j+2].tipoArma + Logica.matrizControleJogadorVez[i][j+2].tipoArma + Logica.matrizControleJogadorVez[i+1][j+2].tipoArma == 0){
-
-				i = Logica.j;
-				j = Logica.i;
-				return true;
-			} 
-			
-		}
-		/* sen�o, retorna false */
-		return false;	
-
-	}
-		
-	/* Verifica��o de posi��o v�lida */
-	private boolean verificaValidadePosicionamentoHidroaviao(int i, int j, boolean rotacionado){  
-
-		/* atribui os valores das minhas vari�veis globais de posicionamento i 
-		 * e j para as vari�veis locais de posicionamento i e j por seguran�a */
-		i = Logica.j;
-		j = Logica.i;
-
-		/*verifica se i e j est�o dentro do limite da matriz */
-		if(i > 0 && i < 14 && j > 0 && j < 14 && i+2 < 15 && j-1 < 15 && j-1 > 0 && (rotacionado == false)){
-
-			/* verifica se arredores est�o vazios, se sim, mant�m i e j como v�lidos e retorna true */
-			if(Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
-			   Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i+2][j-1].tipoArma + Logica.matrizControleJogadorVez[i+2][j].tipoArma + Logica.matrizControleJogadorVez[i+2][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+3][j-1].tipoArma + Logica.matrizControleJogadorVez[i+3][j].tipoArma + Logica.matrizControleJogadorVez[i+3][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i][j-2].tipoArma + Logica.matrizControleJogadorVez[i+1][j-2].tipoArma + Logica.matrizControleJogadorVez[i+2][j-2].tipoArma == 0){
-
-				i = Logica.j;
-				j = Logica.i;
-				return true;
-			} 
-			
-		} else if (i > 0 && i < 14 && j > 0 && j < 14 && i+1 < 15 && j+2 < 15 && (rotacionado == true)) {
-			
-			/* verifica se arredores est�o vazios, se sim, mant�m i e j como v�lidos e retorna true */
-			if(Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
-			   Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i-1][j+2].tipoArma + Logica.matrizControleJogadorVez[i][j+2].tipoArma + Logica.matrizControleJogadorVez[i+1][j+2].tipoArma +
-			   Logica.matrizControleJogadorVez[i-1][j+3].tipoArma + Logica.matrizControleJogadorVez[i][j+3].tipoArma + Logica.matrizControleJogadorVez[i+1][j+3].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+2][j].tipoArma + Logica.matrizControleJogadorVez[i+2][j+1].tipoArma + Logica.matrizControleJogadorVez[i+2][j+2].tipoArma == 0){
-
-				i = Logica.j;
-				j = Logica.i;
-				return true;
-			} 
-			
-		}
-		/* sen�o, retorna false */
-		return false;	
-
-	}
-	
-	/* Verifica��o de posi��o v�lida */
-	private boolean verificaValidadePosicionamentoCruzador(int i, int j, boolean rotacionado){  
-
-		/* atribui os valores das minhas vari�veis globais de posicionamento i 
-		 * e j para as vari�veis locais de posicionamento i e j por seguran�a */
-		i = Logica.j;
-		j = Logica.i;
-
-		/*verifica se i e j est�o dentro do limite da matriz */
-		if(i > 0 && i < 14 && j > 0 && j < 14 && i+3 < 15 && (rotacionado == false)){
-
-			/* verifica se arredores est�o vazios, se sim, mant�m i e j como v�lidos e retorna true */
-			if(Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
-			   Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i+2][j-1].tipoArma + Logica.matrizControleJogadorVez[i+2][j].tipoArma + Logica.matrizControleJogadorVez[i+2][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i+3][j-1].tipoArma + Logica.matrizControleJogadorVez[i+3][j].tipoArma + Logica.matrizControleJogadorVez[i+3][j+1].tipoArma == 0){
-
-				i = Logica.j;
-				j = Logica.i;
-				return true;
-			} 
-			
-		} else if (i > 0 && i < 14 && j > 0 && j < 14 && j+3 < 15 && (rotacionado == true)) {
-			
-			/* verifica se arredores est�o vazios, se sim, mant�m i e j como v�lidos e retorna true */
-			if(Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
-			   Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i-1][j+2].tipoArma + Logica.matrizControleJogadorVez[i][j+2].tipoArma + Logica.matrizControleJogadorVez[i+1][j+2].tipoArma +
-			   Logica.matrizControleJogadorVez[i-1][j+3].tipoArma + Logica.matrizControleJogadorVez[i][j+3].tipoArma + Logica.matrizControleJogadorVez[i+1][j+3].tipoArma == 0){
-
-				i = Logica.j;
-				j = Logica.i;
-				return true;
-			} 
-			
-		}
-		/* sen�o, retorna false */
-		return false;	
-
-	}	
-	
-	/* Verifica��o de posi��o v�lida */
-	private boolean verificaValidadePosicionamentoCouracado(int i, int j, boolean rotacionado){  
-
-		/* atribui os valores das minhas vari�veis globais de posicionamento i 
-		 * e j para as vari�veis locais de posicionamento i e j por seguran�a */
-		i = Logica.j;
-		j = Logica.i;
-
-		/*verifica se i e j est�o dentro do limite da matriz */
-		if(i > 0 && i < 14 && j > 0 && j < 14 && i+4 < 15 && (rotacionado == false)){
-
-			/* verifica se arredores est�o vazios, se sim, mant�m i e j como v�lidos e retorna true */
-			if(Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
-			   Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i+2][j-1].tipoArma + Logica.matrizControleJogadorVez[i+2][j].tipoArma + Logica.matrizControleJogadorVez[i+2][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i+3][j-1].tipoArma + Logica.matrizControleJogadorVez[i+3][j].tipoArma + Logica.matrizControleJogadorVez[i+3][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i+4][j-1].tipoArma + Logica.matrizControleJogadorVez[i+4][j].tipoArma + Logica.matrizControleJogadorVez[i+4][j+1].tipoArma == 0){
-
-				i = Logica.j;
-				j = Logica.i;
-				return true;
-			} 
-			
-		} else if (i > 0 && i < 14 && j > 0 && j < 14 && j+4 < 15 && (rotacionado == true)) {
-			
-			/* verifica se arredores est�o vazios, se sim, mant�m i e j como v�lidos e retorna true */
-			if(Logica.matrizControleJogadorVez[i][j].tipoArma + Logica.matrizControleJogadorVez[i-1][j-1].tipoArma + Logica.matrizControleJogadorVez[i-1][j].tipoArma + 
-			   Logica.matrizControleJogadorVez[i-1][j+1].tipoArma + Logica.matrizControleJogadorVez[i][j-1].tipoArma + Logica.matrizControleJogadorVez[i][j+1].tipoArma + 
-			   Logica.matrizControleJogadorVez[i+1][j-1].tipoArma + Logica.matrizControleJogadorVez[i+1][j].tipoArma + Logica.matrizControleJogadorVez[i+1][j+1].tipoArma +
-			   Logica.matrizControleJogadorVez[i-1][j+2].tipoArma + Logica.matrizControleJogadorVez[i][j+2].tipoArma + Logica.matrizControleJogadorVez[i+1][j+2].tipoArma +
-			   Logica.matrizControleJogadorVez[i-1][j+3].tipoArma + Logica.matrizControleJogadorVez[i][j+3].tipoArma + Logica.matrizControleJogadorVez[i+1][j+3].tipoArma + 
-			   Logica.matrizControleJogadorVez[i-1][j+4].tipoArma + Logica.matrizControleJogadorVez[i][j+4].tipoArma + Logica.matrizControleJogadorVez[i+1][j+4].tipoArma == 0){
-
-				i = Logica.j;
-				j = Logica.i;
-				return true;
-			} 
-			
-		}
-		/* sen�o, retorna false */
-		return false;	
-
-	}
-	
 	/* Verifica��o de Redondezas para tratar afundamento de arma */
 	private void verificaArredoresDestroyer(Matriz[][] matrizControleJogadorVez){
 
 		/* verifica se nos arredores do local do tiro dado existe parte de um destroyer */
 		if(matrizControleJogadorVez[i][j+1].tipoArma == 2 || matrizControleJogadorVez[i][j-1].tipoArma == 2 
-		|| matrizControleJogadorVez[i+1][j].tipoArma == 2 || matrizControleJogadorVez[i-1][j].tipoArma == 2){
+				|| matrizControleJogadorVez[i+1][j].tipoArma == 2 || matrizControleJogadorVez[i-1][j].tipoArma == 2){
 
 			/* marca como acerto apenas, isto �, apenas atribui zero ao local do tiro */
 			matrizControleJogadorVez[i][j].tipoArma = 0;
@@ -466,10 +354,10 @@ public class Logica extends Observable{
 
 		/* verifica se nos arredores do local do tiro dado existe parte de um hidroavi�o */
 		if(matrizControleJogadorVez[i-1][j+1].tipoArma == 3 || matrizControleJogadorVez[i][j+2].tipoArma == 3
-		|| matrizControleJogadorVez[i+1][j-1].tipoArma == 3 || matrizControleJogadorVez[i+1][j+1].tipoArma == 3
-		|| matrizControleJogadorVez[i-1][j-1].tipoArma == 3 || matrizControleJogadorVez[i][j-2].tipoArma == 3
-		|| matrizControleJogadorVez[i+1][j+1].tipoArma == 3 || matrizControleJogadorVez[i+2][j].tipoArma == 3
-		|| matrizControleJogadorVez[i-2][j].tipoArma == 3){
+				|| matrizControleJogadorVez[i+1][j-1].tipoArma == 3 || matrizControleJogadorVez[i+1][j+1].tipoArma == 3
+				|| matrizControleJogadorVez[i-1][j-1].tipoArma == 3 || matrizControleJogadorVez[i][j-2].tipoArma == 3
+				|| matrizControleJogadorVez[i+1][j+1].tipoArma == 3 || matrizControleJogadorVez[i+2][j].tipoArma == 3
+				|| matrizControleJogadorVez[i-2][j].tipoArma == 3){
 
 			/* marca como acerto apenas, isto �, apenas atribui zero ao local do tiro */
 			matrizControleJogadorVez[i][j].tipoArma = 0;
@@ -487,9 +375,9 @@ public class Logica extends Observable{
 
 		/* verifica se nos arredores do local do tiro dado existe parte de um cruzador */
 		if(matrizControleJogadorVez[i][j+1].tipoArma == 4 || matrizControleJogadorVez[i][j+2].tipoArma == 4 || matrizControleJogadorVez[i][j+3].tipoArma == 4 
-		|| matrizControleJogadorVez[i][j-1].tipoArma == 4 || matrizControleJogadorVez[i][j-2].tipoArma == 4 || matrizControleJogadorVez[i][j-3].tipoArma == 4
-		|| matrizControleJogadorVez[i-1][j].tipoArma == 4 || matrizControleJogadorVez[i-2][j].tipoArma == 4 || matrizControleJogadorVez[i-3][j].tipoArma == 4
-		|| matrizControleJogadorVez[i+1][j].tipoArma == 4 || matrizControleJogadorVez[i+2][j].tipoArma == 4 || matrizControleJogadorVez[i+3][j].tipoArma == 4){
+				|| matrizControleJogadorVez[i][j-1].tipoArma == 4 || matrizControleJogadorVez[i][j-2].tipoArma == 4 || matrizControleJogadorVez[i][j-3].tipoArma == 4
+				|| matrizControleJogadorVez[i-1][j].tipoArma == 4 || matrizControleJogadorVez[i-2][j].tipoArma == 4 || matrizControleJogadorVez[i-3][j].tipoArma == 4
+				|| matrizControleJogadorVez[i+1][j].tipoArma == 4 || matrizControleJogadorVez[i+2][j].tipoArma == 4 || matrizControleJogadorVez[i+3][j].tipoArma == 4){
 
 			/* marca como acerto apenas, isto �, apenas atribui zero ao local do tiro */
 			matrizControleJogadorVez[i][j].tipoArma = 0;
@@ -507,9 +395,9 @@ public class Logica extends Observable{
 
 		/* verifica se nos arredores do local do tiro dado existe parte de um coura�ado */
 		if(matrizControleJogadorVez[i][j+1].tipoArma == 5 || matrizControleJogadorVez[i][j+2].tipoArma == 5 || matrizControleJogadorVez[i][j+3].tipoArma == 5 || matrizControleJogadorVez[i][j+4].tipoArma == 5 
-		|| matrizControleJogadorVez[i][j-1].tipoArma == 5 || matrizControleJogadorVez[i][j-2].tipoArma == 5 || matrizControleJogadorVez[i][j-3].tipoArma == 5 || matrizControleJogadorVez[i][j-4].tipoArma == 5
-		|| matrizControleJogadorVez[i-1][j].tipoArma == 5 || matrizControleJogadorVez[i-2][j].tipoArma == 5 || matrizControleJogadorVez[i-3][j].tipoArma == 5 || matrizControleJogadorVez[i-4][j].tipoArma == 5
-		|| matrizControleJogadorVez[i+1][j].tipoArma == 5 || matrizControleJogadorVez[i+2][j].tipoArma == 5 || matrizControleJogadorVez[i+3][j].tipoArma == 5 || matrizControleJogadorVez[i+4][j].tipoArma == 5){
+				|| matrizControleJogadorVez[i][j-1].tipoArma == 5 || matrizControleJogadorVez[i][j-2].tipoArma == 5 || matrizControleJogadorVez[i][j-3].tipoArma == 5 || matrizControleJogadorVez[i][j-4].tipoArma == 5
+				|| matrizControleJogadorVez[i-1][j].tipoArma == 5 || matrizControleJogadorVez[i-2][j].tipoArma == 5 || matrizControleJogadorVez[i-3][j].tipoArma == 5 || matrizControleJogadorVez[i-4][j].tipoArma == 5
+				|| matrizControleJogadorVez[i+1][j].tipoArma == 5 || matrizControleJogadorVez[i+2][j].tipoArma == 5 || matrizControleJogadorVez[i+3][j].tipoArma == 5 || matrizControleJogadorVez[i+4][j].tipoArma == 5){
 
 			/* marca como acerto apenas, isto �, apenas atribui zero ao local do tiro */
 			matrizControleJogadorVez[i][j].tipoArma = 0;
