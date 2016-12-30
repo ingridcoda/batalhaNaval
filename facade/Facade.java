@@ -13,7 +13,7 @@ public class Facade {
 	/* Inicializador da Classe Fachada */
 	public static void inicializaFacade(){
 
-		/* inicializa uma instância de lógica a ser utilizada para o jogo */
+		/* inicializa uma instï¿½ncia de lï¿½gica a ser utilizada para o jogo */
 		l = new Logica();
 
 	}
@@ -29,17 +29,17 @@ public class Facade {
 	/* Carregar Jogo Salvo */
 	public static void carregarJogo(TelaCampoBatalha tela){
 
-		/* chama função de carregamento de jogo passando uma tela de campo de 
+		/* chama funï¿½ï¿½o de carregamento de jogo passando uma tela de campo de 
 		 * batalha vazia a ser preenchida com os dados salvos anteriormente */
 		Salvamento.carregarJogo(tela);
 
 	}
 
-	/* Criação de Jogadores */
+	/* Criaï¿½ï¿½o de Jogadores */
 	public static void criarJogadores(String nomeJogador1, String nomeJogador2){
 
-		/* inicializa duas instâncias de jogador
-		 * com os nomes fornecidos por parâmetro */
+		/* inicializa duas instï¿½ncias de jogador
+		 * com os nomes fornecidos por parï¿½metro */
 		j1 = new Jogador(nomeJogador1);
 		j2 = new Jogador(nomeJogador2);
 
@@ -48,8 +48,8 @@ public class Facade {
 	/* Posicionamento de Armas */
 	public static void posicionarArmasJogador1(String nomeJogador1){
 
-		/* cria uma instancia da tela de posicionamento de embarcações 
-		 * para o primeiro jogador e a adiciona à lista de Observers */
+		/* cria uma instancia da tela de posicionamento de embarcaï¿½ï¿½es 
+		 * para o primeiro jogador e a adiciona ï¿½ lista de Observers */
 		TelaEmbarcacoes.getInstance1();	
 		l.listaObserver.add(TelaEmbarcacoes.getInstance1());
 
@@ -57,8 +57,8 @@ public class Facade {
 
 	public static void posicionarArmasJogador2(String nomeJogador2){
 
-		/* cria uma instancia da tela de posicionamento de embarcações 
-		 * para o segundo jogador e a adiciona à lista de Observers */
+		/* cria uma instancia da tela de posicionamento de embarcaï¿½ï¿½es 
+		 * para o segundo jogador e a adiciona ï¿½ lista de Observers */
 		TelaEmbarcacoes.getInstance2();	
 		l.listaObserver.add(TelaEmbarcacoes.getInstance2());
 		TelaEmbarcacoes.verificaPronto();
@@ -67,17 +67,20 @@ public class Facade {
 
 	public static void escolherPosicaoArma(Matriz[][] matriz, int x, int y){
 
-		/* chama método de posicionamento de embarcações definido na classe lógica,
-		 * passando o último navio clicado, a matriz e as coordenadas x e y clicadas */
-		l.posicionarArma(ControladorNavio.navioClicado, matriz, x, y);
+		/* chama mï¿½todo de posicionamento de embarcaï¿½ï¿½es definido na classe lï¿½gica,
+		 * passando o ï¿½ltimo navio clicado, a matriz e as coordenadas x e y clicadas */
+		if(ControladorNavio.navioClicado != null && ControladorNavio.navioClicado.isPositioned == false){
+			l.posicionarArma(ControladorNavio.navioClicado, matriz, x, y);
+			ControladorNavio.navioClicado = null;
+		}
 		
 	}
 
 	/* Fase de Ataques */
 	public static void iniciarAtaques(){
 
-		/* cria uma instância da tela de campo de batalha, passando os 
-		 * jogadores como parâmetro e a adiciona à lista de Observers */
+		/* cria uma instï¿½ncia da tela de campo de batalha, passando os 
+		 * jogadores como parï¿½metro e a adiciona ï¿½ lista de Observers */
 		TelaCampoBatalha.getInstance(j1, j2);
 		l.listaObserver.add(TelaCampoBatalha.getInstance(j1, j2));
 
@@ -86,17 +89,17 @@ public class Facade {
 	/* Ataques */
 	public static void atacar(Matriz[][] matriz, int x, int y){
 		
-		/* repetição garante que cada jogador ataque três vezes 
+		/* repetiï¿½ï¿½o garante que cada jogador ataque trï¿½s vezes 
 		 * seguidas e depois a vez de atacar passe para o oponente */
 		for(int i = 0; i < 3; i++){
 			
-			/* variável acertou recebe retorno booleano de acerto fornecido 
-			 * pela chamada do método atirar definido na classe lógica, onde 
-			 * é passada a matriz e as coordenadas x e y clicadas */
+			/* variï¿½vel acertou recebe retorno booleano de acerto fornecido 
+			 * pela chamada do mï¿½todo atirar definido na classe lï¿½gica, onde 
+			 * ï¿½ passada a matriz e as coordenadas x e y clicadas */
 			acertou = l.atirar(matriz, x, y);
 			
 			/* se acertou o tiro, redesenha tela de campo de batalha atual e o 
-			 * número de embarcações do jogador oponente é decrementado em um */ 
+			 * nï¿½mero de embarcaï¿½ï¿½es do jogador oponente ï¿½ decrementado em um */ 
 			if(acertou){
 				TelaCampoBatalha.getInstance(j1, j2).repaint();
 				j2.numEmbarcacoes--;
@@ -109,12 +112,12 @@ public class Facade {
 		/* verifica se terminou o jogo ou se o jogo prossegue */
 		if(l.terminou){
 		
-			/* cria uma instância da tela final, passando o nome do vencedor */
+			/* cria uma instï¿½ncia da tela final, passando o nome do vencedor */
 			TelaFinal.getInstance(Logica.nomeVencedor);			
 			
 		} else {
 		
-			/* chama método de alternar os tabuleiros */
+			/* chama mï¿½todo de alternar os tabuleiros */
 			TelaCampoBatalha.getInstance(j1, j2).alternaTabuleiros();
 			
 		}
@@ -124,7 +127,7 @@ public class Facade {
 	/* Salvamento do Jogo */
 	public static void salvarJogo(TelaCampoBatalha tela){
 		
-		/* chama método de salvamento de jogo, passando 
+		/* chama mï¿½todo de salvamento de jogo, passando 
 		 * tela de campo de batalha com os dados a serem
 		 * armazenados no arquivo de salvamento */
 		Salvamento.salvarJogo(tela);
