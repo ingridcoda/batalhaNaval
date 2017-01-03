@@ -6,19 +6,23 @@ import java.awt.geom.*;
 import javax.swing.*;
 
 import controller.*;
-import model.Matriz;
+//import model.Matriz;
 import model.Jogador;
 
 @SuppressWarnings("serial")
 public class Tabuleiro extends JPanel implements MouseListener{
-	private int numEmbarcacoesADistribuir;
-	private static Jogador jogador;
+	//private int numEmbarcacoesADistribuir;
+	private Jogador jogador;
+	public char tipoTela;   /////// tipo 'a' é ataque e tipo 'p' é posicionamento.
 
-	public Tabuleiro(Jogador j, int x, int y){
-		Tabuleiro.jogador = j;
+	public Tabuleiro(Jogador j, int x, int y, char tipoTela){
+		jogador = j;
+
 		this.setSize(315, 315);
 		this.setBackground(Color.WHITE);
 		this.setLocation(x, y);
+		this.setEnabled(false);
+		this.tipoTela = tipoTela;
 
 		addMouseListener(this);
 	}
@@ -29,33 +33,31 @@ public class Tabuleiro extends JPanel implements MouseListener{
 		Graphics2D g2d = (Graphics2D) g;
 		int x, y, i, j;
 
-		x = 10;
-		y = 10;
-		j = 0;
-		while (j < 15){ 
-			for(i = 0; i < 15; i++){
+		for(i=0, y=10; i<15; i++, y+=20){
+			for(j=0, x=10; j<15; j++, x+=20){
 				g2d.draw(new Rectangle2D.Double(x, y, 20, 20));	
-				
-				/* trata caso de posição que já foi acertada */
-				if(jogador.matriz[i][j].getTipoArma() == 0 && jogador.matriz[i][j].statusAcerto == true){
+
+				// trata caso de posiï¿½ï¿½o que jï¿½ foi acertada /
+				if(jogador.matriz[i][j].getTipoArma() == -1){
 					g2d.setColor(Color.RED);
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
-					
-				/* trata caso de tela de posicionamento */	
-				} else if(jogador.matriz[i][j].getTipoArma() > 0 && (TelaEmbarcacoes.getInstance1().isVisible() == true || TelaEmbarcacoes.getInstance2().isVisible() == true)){
+					g2d.setColor(Color.BLACK);
+
+					/* trata caso de tela de posicionamento */	
+				} else if(jogador.matriz[i][j].getTipoArma() > 0 && tipoTela == 'p'){
 					g2d.setColor(Color.BLACK);
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
-					
-				/* trata caso de clicar no mar */
-				} else if(jogador.matriz[i][j].getTipoArma() == 0 && jogador.matriz[i][j].foiClicado == true){
+
+					/* trata caso de clicar no mar */
+				} else if(jogador.matriz[i][j].getTipoArma() == -2){
 					g2d.setColor(Color.BLUE);
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
+					g2d.setColor(Color.BLACK);			
+
 				}
-				x += 20;
+
 			}
-			x = 10;
-			y += 20;
-			j++;
+
 		}
 
 		String[] dados = new String[15];
@@ -64,7 +66,7 @@ public class Tabuleiro extends JPanel implements MouseListener{
 		dados[2] = "3";  dados[7] = "8";  dados[12] = "13";
 		dados[3] = "4";  dados[8] = "9";  dados[13] = "14";
 		dados[4] = "5";  dados[9] = "10"; dados[14] = "15";
-		y = 10; 
+		y = 9; 
 		x = 18;
 
 		for(i = 0; i < 15; i++){
@@ -87,25 +89,9 @@ public class Tabuleiro extends JPanel implements MouseListener{
 		for(i = 0; i < 15; i++){
 			g2d.drawString(dados[i], x, y);
 			y += 20;
-		}		
+		}
 
 	}
-
-
-	public int getNumEmbarcacoesADistribuir() {
-		return numEmbarcacoesADistribuir;
-	}
-
-
-
-	public void setNumEmbarcacoesADistribuir(int numEmbarcacoesADistribuir) {
-		this.numEmbarcacoesADistribuir = numEmbarcacoesADistribuir;
-	}
-
-	public Matriz[][] getMatrizControle(){
-		return jogador.matriz;
-	}
-
 
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
@@ -127,8 +113,10 @@ public class Tabuleiro extends JPanel implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent mouse) {
-		new ControladorMatriz(jogador.matriz, mouse).mousePressed(mouse);
-
+		
+		if(this.isEnabled() == true){
+			new ControladorMatriz(jogador.matriz, mouse).mousePressed(mouse);
+		}
 	}
 
 

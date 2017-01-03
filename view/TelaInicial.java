@@ -4,12 +4,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import facade.Facade;
-import model.Jogador;
 
 /* Classe de Visualização Inicial */
 @SuppressWarnings("serial")
 public class TelaInicial extends Frame implements ActionListener{
-	private static TelaInicial instancia = null;
+	private static TelaInicial instancia;
 	private Font fonteTitulo = new Font("Monospaced", Font.BOLD, 60);
 	private JLabel lblTitle;
 	private JLabel lblText;
@@ -17,7 +16,7 @@ public class TelaInicial extends Frame implements ActionListener{
 	public static JButton btnLoadGame;
 	
 	/* Construtor da Classe de Visualização */
-	public TelaInicial(){
+	private TelaInicial(){
 		super();
 		
 		this.setBackground(Color.WHITE);
@@ -51,12 +50,10 @@ public class TelaInicial extends Frame implements ActionListener{
 		
 	}
 
-	/* Singleton */
-	public static synchronized TelaInicial getInstance(){
+	public static void mostrarTela(){
 		if(instancia == null){
 			instancia = new TelaInicial();
-		} 
-		return instancia;
+		}
 	}
 	
 	/* Tratamento de Evento de Botão */
@@ -79,9 +76,7 @@ public class TelaInicial extends Frame implements ActionListener{
 			 * passando uma instância da tela de campo de batalha e os jogadores criados*/
 			this.setVisible(false);
 			this.dispose();
-			Jogador j1 = new Jogador("");
-			Jogador j2 = new Jogador("");
-			Facade.carregarJogo(TelaCampoBatalha.getInstance(j1, j2));
+			Facade.carregarJogo();
 			
 		} else {
 			

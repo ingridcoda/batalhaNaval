@@ -13,15 +13,14 @@ import model.Matriz;
 public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 	private static TelaEmbarcacoes instancia1  = null;
 	private static TelaEmbarcacoes instancia2  = null;
-	public static boolean tabuleirosProntos = false;
+	private static int quantidadeTabuleirosProntos; //NOVO
+	private static boolean tabuleirosProntos;
 	private Font fonteTitulo = new Font("Monospaced", Font.BOLD, 60);
-	private static JButton btnReady;
+	private JButton btnReady;
 	private JLabel lblTitle;
 	private JLabel lbl1;
-	private static int qtdEmbarcacoesADistribuir = 30;
-	public static Jogador jog1 = new Jogador("");
-	public static Jogador jog2 = new Jogador("");
-	public static Jogador jogVez = new Jogador("");
+	private static int qtdEmbarcacoesADistribuir = 15;
+	public static Jogador jogVez; //modificado
 	public Tabuleiro t;
 	public static int qtdNavio1 = 4;
 	public static int qtdNavio2 = 3;
@@ -30,19 +29,20 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 	public static int qtdNavio5 = 1;
 
 	/* Construtor da Classe de Visualização */
-	public TelaEmbarcacoes(Jogador j){
+	private TelaEmbarcacoes(int idJogador){
 		super();
-		TelaEmbarcacoes.jogVez = j;
-		this.t = new Tabuleiro(jogVez, 450, 150);
+		
+		jogVez = Facade.getJogador(idJogador);
+		this.t = new Tabuleiro(jogVez, 450, 150, 'p');
 
 		getContentPane().add(painel);
 		this.add(t);
+		
 		addHidroaviao();
 		addSubmarino();
 		addDestroyer();
 		addCruzador();
 		addCouracado();
-
 
 		this.setBackground(Color.WHITE);
 
@@ -60,7 +60,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 		btnReady.setBounds(350, 500, 100, 30);
 		this.painel.add(btnReady);
 		btnReady.addActionListener(this);
-		//btnReady.setEnabled(false);
+		btnReady.setEnabled(false);
 
 		getContentPane().add(painel);
 		this.painel.setLayout(null);
@@ -70,41 +70,24 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 
 
 	}	
+	
+	public static TelaEmbarcacoes getInstance(int idInstancia){
+		if(idInstancia==1){
+			if(instancia1 == null)
+				instancia1 = new TelaEmbarcacoes(1);
 
-	/* Singleton */
-	public static synchronized TelaEmbarcacoes getInstance1(){
-		if(instancia1 == null){
-			instancia1 = new TelaEmbarcacoes(jogVez);
-		} 
-		return instancia1;
-	}
-
-	public static synchronized TelaEmbarcacoes getInstance2(){
-		if(instancia2 == null){
-			instancia2 = new TelaEmbarcacoes(jogVez);
-		} 
-		return instancia2;
-	}
-
-	/* Getters e Setters */
-	public Matriz[][] getMatrizControle() {
-		return jogVez.matriz;
-	}
-
-	/* Verificação de Tabuleiro Pronto */
-	public static void verificaPronto(){
-
-		/* verifica se número de embarcações a distribuir é zero*/
-		if(qtdEmbarcacoesADistribuir == 0){
-
-			/* seta a variável tabuleirosProntos como true e habilita o botão "Pronto" */
-			tabuleirosProntos = true;
-			btnReady.setEnabled(true);
-
+			return instancia1;
 		}
+		else{
+			if(instancia2 == null)
+				instancia2 = new TelaEmbarcacoes(2);
 
+			return instancia2;
+		}
+			
 	}
 
+	
 	/* Adicionar Navios */
 	public void addHidroaviao(){
 		int i = 0;
@@ -135,8 +118,7 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 		}
 
 	}
-
-
+	
 	public void addDestroyer(){
 		int i = 0;
 		int x = 30;
@@ -167,7 +149,6 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 
 	}
 
-
 	public void addCouracado(){
 		int i = 0;
 		int x = 30;
@@ -182,36 +163,45 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 
 	}
 
+	
 	/* Tratamento de Evento de Botão */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		/* verifica se botão foi clicado e tabuleiro está pronto */
-		//if(e.getSource() == btnReady && tabuleirosProntos == false){
+		if(e.getSource() == btnReady && tabuleirosProntos == false){
 
 			/* seta a tela de posicionamento de embarcações como invisível, 
 			 * a encerra e chama método de posicionamento das embarcações 
 			 * do segundo jogador, que está definido na classe de fachada */
-			//this.setVisible(false);
-			//this.dispose();
-			//Facade.posicionarArmasJogador2(jog2.nome);
+			this.setVisible(false);
+			this.setEnabled(false);
+			this.dispose();
+			Facade.posicionarArmasJogador(2);
 
-		//} else if (e.getSource() == btnReady && tabuleirosProntos == true){
+		} else if (e.getSource() == btnReady && tabuleirosProntos == true){
 
 			/* seta a tela de posicionamento de embarcações como 
 			 * invisível, a encerra e chama método de início de fase 
 			 * de ataques, que está definido na classe de fachada */
 			this.setVisible(false);
+			this.setEnabled(false);
 			this.dispose();
 			Facade.iniciarAtaques();
 
-		//} else {
-
+		} else {
+			System.out.println("NÃO ERA PRA ACONTECER!!!");
 			/* finaliza o jogo */
 			//System.exit(1);
 
-		//}
+		}
 
+	}
+	
+	public void repintarTela(){
+		this.t.repaint();
+		this.painel.repaint();
+		this.repaint();
 	}
 
 	/* Observer */
@@ -220,18 +210,29 @@ public class TelaEmbarcacoes extends Frame implements ActionListener, Observer{
 
 		/* verifica se observado mudou em algo */
 		if(o.hasChanged()){
-
+			System.out.println("Observador foi alertado de mudanças! Faltam "+qtdEmbarcacoesADistribuir+" navios!");
 			/* matriz do jogador recebe matriz atualizada e quantidade 
 			 * de embarcações a distribuir é decrementado em um */
 			jogVez.matriz = (Matriz[][]) obj;
 			qtdEmbarcacoesADistribuir--;
-
+			Navio.setSemPendencia();
+			
+			if(qtdEmbarcacoesADistribuir==0){
+				System.out.println("Jogador completou a distribuição de seus navios!");
+				btnReady.setEnabled(true);
+				quantidadeTabuleirosProntos++;
+				qtdEmbarcacoesADistribuir=15;
+			}
+			
+			if(quantidadeTabuleirosProntos==2){
+				System.out.println("Pronto para iniciar jogo!");
+				tabuleirosProntos = true;
+			}
 		}
-
+		else
+			System.out.println("Update Observer Nada Mudou!");
 		/* redesenha elementos da tela atualizados */
-		this.t.repaint();
-		this.painel.repaint();
-		this.repaint();
+		repintarTela();
 
 	}
 

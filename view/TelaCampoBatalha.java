@@ -19,28 +19,55 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 	private JLabel lbl2;
 	private JLabel lbl3;
 	public static JButton btnSave;
-	public static Jogador jogVez;
-	public static Jogador jogOponente;
+	public static Jogador jogVez, jogOponente;
 	public static Tabuleiro t1, t2;
 	private JPanel painel;
 
 	/* Construtor da Classe de Visualização */
-	public TelaCampoBatalha(Jogador jogVez, Jogador jogOponente){	
+	private TelaCampoBatalha(Jogador jogVez, Jogador jogOponente){	
 		super();
 		this.painel = new JPanel();
 
 		TelaCampoBatalha.jogVez = jogVez;
 		TelaCampoBatalha.jogOponente = jogOponente;
+		
+		
+		//DEBUG JOGADORES REFERENCIADOS
+		System.out.println("TELACAMPOBATALHA:");
+		System.out.println(jogVez.getNome());
+		for(int x = 0; x < 15; x++){
+			for (int y = 0; y < 15; y++){
+				System.out.print(jogVez.matriz[x][y].tipoArma + " ");
+			}
+			System.out.println("");
+		}
+		System.out.println("");
+		System.out.println(jogOponente.getNome());
+		for(int x = 0; x < 15; x++){
+			for (int y = 0; y < 15; y++){
+				System.out.print(jogOponente.matriz[x][y].tipoArma + " ");
+			}
+			System.out.println("");
+		}
+		
+		//FIM DEBUG
+		
+		
+		
 		this.setBackground(Color.WHITE);
 		this.painel.setBackground(Color.WHITE);
 		this.painel.setBounds(0, 0, 800, 600);
 
-		t1 = new Tabuleiro(TelaCampoBatalha.jogVez, 30, 150);
+		t1 = new Tabuleiro(TelaCampoBatalha.jogVez, 30, 150, 'a');
+		t2 = new Tabuleiro(TelaCampoBatalha.jogOponente, 450, 150, 'a');
+		System.out.println("Tabuleiros são iguais?" +(t1==t2));		
+		
+		t1.setEnabled(false); //começa como desabilitado
+		//t1.setVisible(false);
 		this.add(t1);
-		t1.setEnabled(false);
-		t2 = new Tabuleiro(TelaCampoBatalha.jogOponente, 450, 150);
+		t2.setEnabled(true); //começa como habilitado
+		//t2.setVisible(true);
 		this.add(t2);
-		t2.setEnabled(true);
 
 		lblTitle = new JLabel("BATALHA NAVAL");
 		lblTitle.setBounds(160, -250, 800, 600);
@@ -61,15 +88,21 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 
 		btnSave = new JButton("Salvar Jogo");
 		btnSave.setBounds(345, 500, 110, 30);
+		btnSave.addActionListener(this);
 		this.painel.add(btnSave);
+		
 
 		this.painel.setLayout(null);
 		this.painel.setVisible(true);
 		this.getContentPane().add(painel);	
 		this.setLayout(null);
 		this.setVisible(true);	
-
+		
+		System.out.println("TELACAMPOBATALHA INSTANCIADO!");
+		System.out.println("TAB1 HABILITADO? "+t1.isEnabled());
+		System.out.println("TAB2 HABILITADO? "+t2.isEnabled());
 	}
+	
 
 	/* Singleton */
 	public static synchronized TelaCampoBatalha getInstance(Jogador j1, Jogador j2){
@@ -78,39 +111,43 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 		} 
 		return instancia;
 	}
+	
+	public static boolean estaInstanciado(){
+		if(instancia != null)
+			return true;
+		return false;
+	}
 
 	/* Alternar Vez de Jogadores */
 	public void alternaJogadorVez(){
 
 		/* atribui jogador da vez ao jogador oponente, atribui 
 		 * jogador oponente ao jogador da vez e redesenha tela */
+		lbl3.setText("Vez do Jogador "+jogOponente.nome);
 		Jogador aux = jogVez;
 		jogVez = jogOponente;
 		jogOponente = aux;
-		repaint();
+		
 
 	}
 
 	/* Alternar Tabuleiros */
 	public void alternaTabuleiros(){
-
-		/* verifica qual tabuleiro está habilitado */
-		if(t1.isEnabled() && t1.getMatrizControle() == jogOponente.matriz){
-
-			/*desabilita o primeiro tabuleiro e habilita o segundo tabuleiro */ 
-			t1.setEnabled(false);
-			t2.setEnabled(true);
-
-		} else if (t2.isEnabled() && t2.getMatrizControle() == jogOponente.matriz){
-
-			/*desabilita o segundo tabuleiro e habilita o primeiro tabuleiro */ 
-			t2.setEnabled(false);
-			t1.setEnabled(true);
-		}
+		t2.setEnabled(t1.isEnabled());
+		//t2.setVisible(t1.isVisible());
+		t1.setEnabled(!t1.isEnabled());
+		//t1.setVisible(!t1.isVisible());
 
 		/*chama método de alternar jogadores definido nesta classe e redesenha tela */
 		alternaJogadorVez();
-		repaint();
+		
+		t1.repaint();
+		t2.repaint();
+		this.painel.repaint();
+		this.repaint();
+		
+		System.out.println("TAB1 HABILITADO? "+t1.isEnabled());
+		System.out.println("TAB2 HABILITADO? "+t2.isEnabled());
 
 	}
 
@@ -130,18 +167,16 @@ public class TelaCampoBatalha extends Frame implements ActionListener, Observer{
 
 		/* verifica se observado mudou em algo */
 		if(o.hasChanged()){
-
+			System.out.println("TELACAMPOBATALHA: O observador foi notificado de uma modificação!");
 			/* matriz do jogador recebe matriz atualizada e tela é redesenhada */
 			TelaCampoBatalha.jogOponente.matriz = (Matriz[][]) arg;
-
-		}	
-
-		/* redesenha elementos da tela atualizados */
-		TelaCampoBatalha.t1.repaint();
-		TelaCampoBatalha.t2.repaint();
-		this.painel.repaint();
-		this.repaint();	
-
+			
+			/* redesenha elementos da tela atualizados */
+			TelaCampoBatalha.t1.repaint();
+			TelaCampoBatalha.t2.repaint();
+			this.painel.repaint();
+			this.repaint();	
+		}
 	}
 
 

@@ -7,7 +7,6 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class Frame extends JFrame{
 	protected JPanel painel = new JPanel();
-	private static Frame instancia = null;
 	
 	/* Construtor da Classe de Visualização */
 	public Frame(){	
@@ -21,13 +20,5 @@ public class Frame extends JFrame{
 		this.painel.setBackground(Color.WHITE);
 		this.painel.setVisible(true);
 		this.getContentPane().add(painel);
-	}
-	
-	/* Singleton */
-	public static synchronized Frame getInstance(){
-		if(instancia == null){
-			instancia = new TelaJogadores();
-		} 
-		return instancia;
 	}
 }

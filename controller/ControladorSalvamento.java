@@ -20,7 +20,7 @@ public class ControladorSalvamento implements ActionListener {
 		if(e.getSource() == TelaCampoBatalha.btnSave){
 			Facade.salvarJogo(tela);
 		} else {
-			Facade.carregarJogo(tela);
+			Facade.carregarJogo();
 		}
 		
 	}

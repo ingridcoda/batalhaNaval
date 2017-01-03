@@ -6,7 +6,7 @@ import java.util.*;
 import javax.swing.*;
 
 import view.TelaCampoBatalha;
-import view.TelaInicial;
+import facade.Facade;
 
 /* Classe de Negócio para salvamento do jogo */
 public class Salvamento {
@@ -20,7 +20,9 @@ public class Salvamento {
 		/* cria nova janela de seleção de arquivos, atribui à variável 
 		 * escolherArquivo e coleta resultado obtido nas ações dentro da 
 		 * janela de escolha de arquivo para salvamento escolherArquivo */
+		File caminho = new File(new File("").getAbsolutePath()+"/saves");
 		escolherArquivo = new JFileChooser();
+		escolherArquivo.setCurrentDirectory(caminho);
 		int resultado = escolherArquivo.showSaveDialog(null);
 
 		/* verifica se, quando o arquivo selecionado já existe, não foi confirmada a escolha */
@@ -41,9 +43,20 @@ public class Salvamento {
 		try {
 
 			arquivo = new PrintWriter(arq);
-			arquivo.printf("%d\n", tela.jogVez.numEmbarcacoes);
-			arquivo.printf("%d\n", tela.jogOponente.numEmbarcacoes);
-			arquivo.printf("%s\n", tela.jogVez.nome);
+			
+			arquivo.printf("%s", tela.jogVez.nome);
+			arquivo.println("");
+			arquivo.printf("%s", tela.jogOponente.nome);
+			arquivo.println("");
+			
+			arquivo.println("");
+			
+			arquivo.printf("%d", tela.jogVez.numEmbarcacoes);
+			arquivo.println("");
+			arquivo.printf("%d", tela.jogOponente.numEmbarcacoes);
+			arquivo.println("");
+			
+			arquivo.println("");
 
 			for(int i = 0; i < 15; i++){
 				for(int j = 0; j < 15; j++){
@@ -51,9 +64,9 @@ public class Salvamento {
 				}
 				arquivo.println("");
 			}
-
-			arquivo.printf("%s\n", tela.jogOponente.nome);
-
+			
+			arquivo.println("");
+			
 			for(int i = 0; i < 15; i++){
 				for(int j = 0; j < 15; j++){
 					arquivo.printf("%d ", tela.jogOponente.matriz[i][j].tipoArma);
@@ -77,18 +90,20 @@ public class Salvamento {
 	}
 
 	/* Carregamento de Jogo */
-	@SuppressWarnings("static-access")
-	public static void carregarJogo(TelaCampoBatalha tela){
-
+	public static void carregarJogo(){
+		String jog1, jog2;
 		/* cria nova janela de seleção de arquivos, atribui à variável 
 		 * escolherArquivo e coleta resultado obtido nas ações dentro da 
 		 * janela de escolha de arquivo para carregamento escolherArquivo */
+		
+		File caminho = new File(new File("").getAbsolutePath()+"/saves");
 		escolherArquivo = new JFileChooser();
+		escolherArquivo.setCurrentDirectory(caminho);
 		int resultado = escolherArquivo.showOpenDialog(null);
 
 		/* verifica se arquivo não existe */
 		if (resultado != JFileChooser.APPROVE_OPTION) {
-			TelaInicial.getInstance();
+			//TelaInicial.getInstance();
 		} 
 
 		/* atribui arquivo selecionado à variável arq e cria uma variável do tipo Scanner com valor null */
@@ -101,33 +116,24 @@ public class Salvamento {
 			arquivo = new Scanner(new FileReader(arq));	
 
 			while(arquivo.hasNext()){
-				//System.out.println("Valor atual num embarcacoes jogador vez: " +tela.jogVez.numEmbarcacoes);
-				tela.jogVez.numEmbarcacoes = arquivo.nextInt();
-				//System.out.println("Valor alterado num embarcacoes jogador vez: " +tela.jogVez.numEmbarcacoes);
-				//System.out.println("Valor atual num embarcacoes jogador oponente: " +tela.jogOponente.numEmbarcacoes);
-				tela.jogOponente.numEmbarcacoes = arquivo.nextInt();
-				//System.out.println("Valor alterado num embarcacoes jogador oponente: " +tela.jogOponente.numEmbarcacoes);
-				//System.out.println("Valor atual nome jogador vez: " +tela.jogVez.nome);
-				System.out.println(arquivo.next());
-				tela.jogVez.nome = arquivo.next();
-				//System.out.println("Valor alterado nome jogador vez: " +tela.jogVez.nome);
-
+				jog1 = arquivo.nextLine();
+				jog2 = arquivo.nextLine();
+				
+				Facade.criarJogadores(jog1, jog2);
+				Facade.j1.setNumEmbarcacoes(arquivo.nextInt());
+				Facade.j2.setNumEmbarcacoes(arquivo.nextInt());
+				
+				arquivo.nextLine();
 				for(int i = 0; i < 15; i++){
 					for(int j = 0; j < 15; j++){
-						//System.out.println("Valor atual matriz jogador vez posicao i j: " +tela.jogVez.matriz[i][j].tipoArma);
-////////EXCEÇÃO AQUI	tela.jogVez.matriz[i][j].tipoArma = arquivo.nextInt();
-						//System.out.println("Valor alterado matriz jogador vez posicao i j: " +tela.jogVez.matriz[i][j].tipoArma);
+						Facade.j1.matriz[i][j].tipoArma = arquivo.nextInt();
 					}
 				}
-				//System.out.println("Valor atual nome jogador oponente: " +tela.jogOponente.nome);
-				System.out.println(arquivo.next());
-				tela.jogOponente.nome = arquivo.next();
-				//System.out.println("Valor alterado nome jogador oponente: " +tela.jogOponente.nome);
+				
+				arquivo.nextLine();
 				for(int i = 0; i < 15; i++){
 					for(int j = 0; j < 15; j++){
-						//System.out.println("Valor atual matriz jogador oponente posicao i j: " +tela.jogOponente.matriz[i][j].tipoArma);
-						tela.jogOponente.matriz[i][j].tipoArma = arquivo.nextInt(); 
-						//System.out.println("Valor alterado matriz jogador oponente posicao i j: " +tela.jogVez.matriz[i][j].tipoArma);
+						Facade.j2.matriz[i][j].tipoArma = arquivo.nextInt();
 					}
 				}
 			}		
@@ -136,10 +142,10 @@ public class Salvamento {
 		} catch (FileNotFoundException e){
 
 			JOptionPane.showConfirmDialog(null, "Arquivo não encontrado. Tente novamente!", "Erro", JOptionPane.CLOSED_OPTION);
-			carregarJogo(tela);
+			carregarJogo();
 
 		/* trata exceção do tipo IOException */
-		} catch (IOException e){
+		} catch (@SuppressWarnings("hiding") IOException e){
 
 			JOptionPane.showConfirmDialog(null, "Erro ao carregar arquivo. Tente novamente!", "Erro", JOptionPane.CLOSED_OPTION);
 			System.exit(1);
@@ -156,7 +162,5 @@ public class Salvamento {
 			arquivo.close();
 
 		}
-
 	}
-
 }

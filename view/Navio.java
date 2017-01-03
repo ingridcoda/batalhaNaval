@@ -10,25 +10,21 @@ import controller.ControladorNavio;
 
 @SuppressWarnings("serial")
 public class Navio extends JPanel implements MouseListener{
-	@SuppressWarnings("unused")
-	private int x;
-	@SuppressWarnings("unused")
-	private int y;
 	private int tipo;
+	private static boolean pendente;
 	public boolean isSelected = false;
 	public boolean isRotate = false;
 	public boolean isPositioned = false;
+	private int direcao = 1;
 	private int width = 20;
 	private int height = 20;
 	private Color cor = Color.BLACK;
 
 	public Navio(int x, int y, int tipo){
-		this.x = x;
-		this.y = y;
 		this.tipo = tipo;
 		this.setLocation(x, y);
 
-		addMouseListener(this);
+		//addMouseListener(this); já foi feito na subclasse
 	}
 
 	public void setCor(Color cor) {
@@ -46,29 +42,14 @@ public class Navio extends JPanel implements MouseListener{
 	public int setTam (int tipo){
 		return 20*tipo;
 	}
-
-	/*	public void desenharNavio(){
-		switch (this.tipo){
-
-		case 1: new Submarino(Color.BLACK, x, y);
-				break;
-
-		case 2: new Destroyer(Color.BLACK, x, y);
-				break;		
-
-		case 3: new Hidroaviao(Color.BLACK, x, y);
-				break;	
-
-		case 4: new Cruzador(Color.BLACK, x, y);
-				break;	
-
-		case 5: new Couracado(Color.BLACK, x, y);
-				break;	
-
-		}
+	
+	public static void setSemPendencia(){
+		pendente = false;
 	}
-
-	 */
+	
+	public int getDirecao(){
+		return this.direcao;
+	}
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -98,26 +79,44 @@ public class Navio extends JPanel implements MouseListener{
 				}
 			} else if(tipo == 3){
 				this.width = setTam(1);
-				if(isRotate == false){
-					g2d.draw(new Rectangle2D.Double(0, 20, width, height));
+				
+				if(direcao == 2){
 					g2d.setColor(cor);
-					g2d.fill(new Rectangle2D.Double(0, 20, width+1, height+1));
-					g2d.draw(new Rectangle2D.Double(20, 0, width, height));
+					//g2d.draw(new Rectangle2D.Double(0, 0, width, height));
+					g2d.fill(new Rectangle2D.Double(20, 0, width+1, height+1));
+					//g2d.draw(new Rectangle2D.Double(20, 20, width, height));
+					g2d.fill(new Rectangle2D.Double(0, 20, width, height));
+					//g2d.draw(new Rectangle2D.Double(0, 40, width, height));
+					g2d.fill(new Rectangle2D.Double(20, 40, width, height));
+				}
+				else
+				if(direcao == 3){
 					g2d.setColor(cor);
-					g2d.fill(new Rectangle2D.Double(20, 0, width, height));
-					g2d.draw(new Rectangle2D.Double(40, 20, width, height));
-					g2d.setColor(cor);
-					g2d.fill(new Rectangle2D.Double(40, 20, width, height));
-				} else {
-					g2d.draw(new Rectangle2D.Double(0, 0, width, height));
-					g2d.setColor(cor);
+					//g2d.draw(new Rectangle2D.Double(0, 20, width, height));
 					g2d.fill(new Rectangle2D.Double(0, 0, width+1, height+1));
-					g2d.draw(new Rectangle2D.Double(20, 20, width, height));
-					g2d.setColor(cor);
+					//g2d.draw(new Rectangle2D.Double(20, 0, width, height));
+					g2d.fill(new Rectangle2D.Double(40, 0, width, height));
+					//g2d.draw(new Rectangle2D.Double(40, 20, width, height));
 					g2d.fill(new Rectangle2D.Double(20, 20, width, height));
-					g2d.draw(new Rectangle2D.Double(0, 40, width, height));
+				}
+				else
+				if(direcao == 4){
 					g2d.setColor(cor);
+					//g2d.draw(new Rectangle2D.Double(0, 0, width, height));
+					g2d.fill(new Rectangle2D.Double(0, 0, width+1, height+1));
+					//g2d.draw(new Rectangle2D.Double(20, 20, width, height));
+					g2d.fill(new Rectangle2D.Double(20, 20, width, height));
+					//g2d.draw(new Rectangle2D.Double(0, 40, width, height));
 					g2d.fill(new Rectangle2D.Double(0, 40, width, height));
+				}
+				else{
+					g2d.setColor(cor);
+					//g2d.draw(new Rectangle2D.Double(0, 20, width, height));
+					g2d.fill(new Rectangle2D.Double(20, 0, width, height));
+					//g2d.draw(new Rectangle2D.Double(20, 0, width, height));
+					g2d.fill(new Rectangle2D.Double(0, 20, width, height));
+					//g2d.draw(new Rectangle2D.Double(40, 20, width, height));
+					g2d.fill(new Rectangle2D.Double(40, 20, width, height));
 				}
 			}
 		}
@@ -140,9 +139,21 @@ public class Navio extends JPanel implements MouseListener{
 
 		@Override
 		public void mousePressed(MouseEvent mouse) {
-			//if(SwingUtilities.isLeftMouseButton(mouse)){
-			this.isSelected = !isSelected;
-			//}	
+			System.out.println("Pendente? " + pendente);
+			if(SwingUtilities.isLeftMouseButton(mouse)){
+				if(!pendente){ //só seleciona se não tiver nenhum pendente
+					this.isSelected = !isSelected;
+					pendente = !pendente;
+					ControladorNavio.navioClicado = this;
+				}
+				else
+				if(isSelected){ //há pendentes, então só desseleciona se  
+					this.isSelected = !isSelected;
+					pendente = !pendente;
+					ControladorNavio.navioClicado = null;
+				}
+			}
+			
 			if(SwingUtilities.isRightMouseButton(mouse) && isSelected){
 				this.isRotate = !isRotate;
 				if(tipo != 3){
@@ -151,18 +162,30 @@ public class Navio extends JPanel implements MouseListener{
 					} else {
 						this.setSize(width, height);
 					}
-					this.repaint();
-				} else {
-					if(isRotate == true){
+				} 
+				else {
+					if(direcao == 1){ //então vai pra 2
+						direcao = 2;
 						this.setSize(60, 60);
-					} else {
+					}
+					else
+					if(direcao == 2){
+						direcao = 3;
 						this.setSize(60, 40);
 					}
-					this.repaint();
+					else
+					if(direcao == 3){
+						direcao = 4;
+						this.setSize(60, 60);
+					}
+					else{
+						direcao = 1;
+						this.setSize(60, 40);
+					}
 				}
+				
+				this.repaint();
 			}
-			new ControladorNavio().mousePressed(mouse);		
-
 		}
 
 		@Override

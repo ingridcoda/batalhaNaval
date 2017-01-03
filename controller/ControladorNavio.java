@@ -30,11 +30,7 @@ public class ControladorNavio implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent mouse) {
-		int x = mouse.getX();
-        int y = mouse.getY();
-        System.out.println("Navio x: "+ x +" Navio y: "+ y); 
-        navioClicado = verificaUltimoSelecionado(mouse);
-		
+        		
 	}
 
 	@Override

@@ -3,13 +3,10 @@ package model;
 /* Classe de Negócio para criação do tipo Matriz */
 public class Matriz {
 	public int tipoArma;
-	public boolean statusAcerto;
-	public boolean foiClicado;
 
 	/* Construtor da Classe de Negócio */
-	public Matriz(int arma, boolean statusAcerto){
+	public Matriz(int arma){
 		this.tipoArma = arma;
-		this.statusAcerto = statusAcerto;
 	}
 
 	/* Getters e Setters */
@@ -21,23 +18,17 @@ public class Matriz {
 		this.tipoArma = tipo;		
 	}
 
-	public static boolean getStatusAcerto(Matriz[][] matriz, int i, int j){
-		return matriz[i][j].statusAcerto;
-	}
-
 	/* Inicialização da Matriz */
-	public static Matriz[][] inicializaMatriz(Matriz[][] matriz){
+	public static Matriz[][] criaMatrizInicializada(){
 
 		/* inicializa matriz */
-		matriz = new Matriz[15][15];
+		Matriz[][] matriz = new Matriz[15][15];
 
 		/* inicializa cada posição da matriz */
 		for(int i = 0; i < 15; i++){
 			for(int j = 0; j < 15; j++){
-				matriz[i][j] = new Matriz(0, false);
+				matriz[i][j] = new Matriz(0);
 				matriz[i][j].tipoArma = 0;
-				matriz[i][j].statusAcerto = false;
-				matriz[i][j].foiClicado = false;
 			}
 		}
 
