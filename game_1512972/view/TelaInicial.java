@@ -5,18 +5,17 @@ import java.awt.event.*;
 import javax.swing.*;
 import facade.Facade;
 
-/* Classe de Visualizacao Inicial */
+/* Classe de Visualização Inicial */
 @SuppressWarnings("serial")
 public class TelaInicial extends Frame implements ActionListener{
-	private static TelaInicial instancia;
 	private Font fonteTitulo = new Font("Monospaced", Font.BOLD, 60);
 	private JLabel lblTitle;
 	private JLabel lblText;
 	public static JButton btnNewGame;
 	public static JButton btnLoadGame;
 	
-	/* Construtor da Classe de Visualizacao */
-	private TelaInicial(){
+	/* Construtor da Classe de Visualização */
+	public TelaInicial(){
 		super();
 		
 		this.setBackground(Color.WHITE);
@@ -49,33 +48,28 @@ public class TelaInicial extends Frame implements ActionListener{
 		this.setVisible(true);
 		
 	}
-
-	public static void mostrarTela(){
-		if(instancia == null){
-			instancia = new TelaInicial();
-		}
-	}
 	
-	/* Tratamento de Evento de Botao */
+	/* Tratamento de Evento de Botão */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		/* verifica qual botao foi clicado */
+		/* verifica qual botão foi clicado */
 		if(e.getSource() == btnNewGame){
 			
 			/* seta visibilidade da tela inicial como falsa, a encerra 
-			 * e chama metodo novo jogo, definido na classe da fachada */
+			 * e chama método novo jogo, definido na classe da fachada */
 			this.setVisible(false);
 			this.dispose();
 			Facade.novoJogo();
 			
 		} else if (e.getSource() == btnLoadGame){
 			
-			/* seta visibilidade da tela inicial como falsa, a encerra, chama 
-			 * metodo de carregamento de jogo, definido na classe da fachada */
+			/* seta visibilidade da tela inicial como falsa, a encerra, cria duas instâncias de jogadores
+			 * com nomes vazios e chama método de carregamento de jogo, definido na classe de fachada, 
+			 * passando uma instância da tela de campo de batalha e os jogadores criados*/
 			this.setVisible(false);
 			this.dispose();
-			Facade.carregarJogo();
+			Facade.getFacadeInstance().carregarJogo();
 			
 		} else {
 			

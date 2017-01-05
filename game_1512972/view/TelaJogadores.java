@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import facade.*;
 
-/* Classe de Visualizacao da Fase de Criacao de Jogadores */
+/* Classe de Visualização da Fase de Criação de Jogadores */
 @SuppressWarnings("serial")
 public class TelaJogadores extends Frame implements ActionListener{
 	private static TelaJogadores instancia;
@@ -19,7 +19,7 @@ public class TelaJogadores extends Frame implements ActionListener{
 	public static JButton btnStart;
 	public static JButton btnCancel;
 	
-	/* Construtor da Classe de Visualizacao */
+	/* Construtor da Classe de Visualização */
 	private TelaJogadores(){
 		super();
 		
@@ -68,7 +68,6 @@ public class TelaJogadores extends Frame implements ActionListener{
 		this.setVisible(true);			
 	}
 	
-	/* Singleton */
 	public static void mostrarTela(){
 		if(instancia == null){
 			instancia = new TelaJogadores();
@@ -86,15 +85,15 @@ public class TelaJogadores extends Frame implements ActionListener{
 	/* Alternar Nome do Jogador */
 	public static String alteraNomeJogador(String nomeJogador){
 		
-		/*verifica nome do jogador dado por parametro*/
+		/*verifica nome do jogador dado por parâmetro*/
 		if(nomeJogador.equals(getNomeJogador(1))){
 			
-			/* atribui nome do segundo jogador ao nome dado por parametro */
+			/* atribui nome do segundo jogador ao nome dado por parâmetro */
 			nomeJogador = getNomeJogador(2);
 			
 		} else {
 			
-			/* atribui nome do primeiro jogador ao nome dado por parametro */
+			/* atribui nome do primeiro jogador ao nome dado por parâmetro */
 			nomeJogador = getNomeJogador(1);	
 			
 		}
@@ -103,27 +102,25 @@ public class TelaJogadores extends Frame implements ActionListener{
 		return nomeJogador;
 	}
 	
-	/* Tratamento de Evento de Botao */
+	/* Tratamento de Evento de Botão */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		/* verifica botão clicado*/
 		if(e.getSource() == btnStart){
 			
 			/* seta visibilidade da tela de novo jogo como falsa, a encerra e chama
-			 * metodos de criacao de jogadores e de criacao da tela de posicionamento 
-			 * de embarcacoes, definidos na classe da fachada, passando nome de jogador */
+			 * métodos de criação de jogadores e de criação da tela de posicionamento 
+			 * de embarcações, definidos na classe da fachada, passando nome de jogador */
+			System.out.println("FOI AQUI?");
 			this.setVisible(false);
 			this.dispose();
-			Facade.criarJogadores(getNomeJogador(1), getNomeJogador(2));
-			Facade.posicionarArmasJogador(1);
+			Facade.getFacadeInstance().criarJogadores(getNomeJogador(1), getNomeJogador(2));
+			Facade.getFacadeInstance().posicionarArmasJogador(1);
 			
 		} else if(e.getSource() == btnCancel){
 			
 			/* finaliza o jogo */
 			System.exit(1);
-			
 		}
-		
 	}
-	
 }

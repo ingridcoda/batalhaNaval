@@ -6,24 +6,22 @@ import java.awt.geom.*;
 import javax.swing.*;
 
 import controller.*;
+import facade.Facade;
 //import model.Matriz;
-import model.Jogador;
 
 @SuppressWarnings("serial")
-
-/* Classe de Visualizacao do Tabuleiro */
 public class Tabuleiro extends JPanel implements MouseListener{
-	private Jogador jogador;
+	//private int numEmbarcacoesADistribuir;
+	private int idJogador;
 	public char tipoTela;   /////// tipo 'a' é ataque e tipo 'p' é posicionamento.
 
-	/* Construtor da Classe de Visualizacao */
-	public Tabuleiro(Jogador j, int x, int y, char tipoTela){
-		jogador = j;
-
+	public Tabuleiro(int id, int x, int y, char tipoTela){
+		idJogador = id;
+		
 		this.setSize(315, 315);
 		this.setBackground(Color.WHITE);
 		this.setLocation(x, y);
-		this.setEnabled(true);
+		//this.setEnabled(false);
 		this.tipoTela = tipoTela;
 
 		addMouseListener(this);
@@ -34,32 +32,32 @@ public class Tabuleiro extends JPanel implements MouseListener{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		int x, y, i, j;
-
-		for(i = 0, y = 10; i < 15; i++, y += 20)
-			for(j = 0, x = 10; j < 15; j++, x += 20){
+		
+		for(i=0, y=10; i<15; i++, y+=20)
+			for(j=0, x=10; j<15; j++, x+=20){
 				g2d.draw(new Rectangle2D.Double(x, y, 20, 20));	
-
-				// trata caso de posicao que ja foi acertada /
-				if(jogador.matriz[i][j].getTipoArma() == -2){
+				
+				// trata caso de posiï¿½ï¿½o que jï¿½ foi acertada /
+				if(Facade.getFacadeInstance().getJogador(idJogador).matriz[i][j].getTipoArma() == -2){
 					g2d.setColor(Color.RED);
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
-
-					/* trata caso de tela de posicionamento */	
-				} else if(jogador.matriz[i][j].getTipoArma() > 0 && tipoTela == 'p'){
+					
+				/* trata caso de tela de posicionamento */	
+				} else if(Facade.getFacadeInstance().getJogador(idJogador).matriz[i][j].getTipoArma() > 0 && tipoTela == 'p'){
 					g2d.setColor(Color.BLACK);
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
-
-					/* trata caso de clicar no mar */
-				} else if(jogador.matriz[i][j].getTipoArma() == -1){
+					
+				/* trata caso de clicar no mar */
+				} else if(Facade.getFacadeInstance().getJogador(idJogador).matriz[i][j].getTipoArma() == -1){
 					g2d.setColor(Color.BLUE);
 					g2d.fill(new Rectangle2D.Double(x, y, 20, 20));
 				} 
-
+				
 				g2d.setColor(Color.BLACK);
 			}
 
-
-
+		
+		
 		String[] dados = new String[15];
 		dados[0] = "1";  dados[5] = "6";  dados[10] = "11";
 		dados[1] = "2";  dados[6] = "7";  dados[11] = "12";
@@ -92,30 +90,34 @@ public class Tabuleiro extends JPanel implements MouseListener{
 		}
 
 	}
-	
-	
-	/* Tratamento de Evento de Mouse */
+
 	@Override
 	public void mouseClicked(MouseEvent mouse) {
 
 	}
+
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 
 	}
 
+
 	@Override
 	public void mouseExited(MouseEvent e) {
 
 	}
 
+
 	@Override
 	public void mousePressed(MouseEvent mouse) {
 		if(this.isEnabled()){
-			new ControladorMatriz(jogador.matriz, mouse).mousePressed(mouse);
+			System.out.println("JOGADOR "+idJogador+" CLICOU NO TABULEIRO");
+			new ControladorMatriz(Facade.getFacadeInstance().getJogador(idJogador).matriz, mouse).mousePressed(mouse);
 		}
+
 	}
+
 
 	@Override
 	public void mouseReleased(MouseEvent e) {

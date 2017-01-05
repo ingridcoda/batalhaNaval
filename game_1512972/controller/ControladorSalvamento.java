@@ -14,21 +14,13 @@ public class ControladorSalvamento implements ActionListener {
 	public ControladorSalvamento(TelaCampoBatalha tela){
 		this.tela = tela;
 	}
-	
-	/* Tratamento de Eventos de Botao */
+	/* Tratamento de Eventos de Botão */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		/* verifica qual botao foi clicado */
 		if(e.getSource() == TelaCampoBatalha.btnSave){
-			
-			/* chama metodo de salvamento de jogo, definido na classe de fachada */
 			Facade.salvarJogo(tela);
-			
 		} else {
-			
-			/* chama metodo de salvamento de jogo, definido na classe de fachada */
-			Facade.carregarJogo();
+			Facade.getFacadeInstance().carregarJogo();
 		}
 		
 	}
